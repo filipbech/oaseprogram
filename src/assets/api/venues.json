@@ -1,0 +1,22 @@
+[{
+    "id": 1,
+    "title": "Areopagos katedralen",
+    "location": {
+      "x": 55.5552334,
+      "y": 10.00000
+    }
+},{
+  "id": 2,
+  "title": "OaseTorvet",
+  "location": {
+    "x": 55.666666,
+    "y": 10.03000
+  }
+},{
+  "id": 3,
+  "title": "VoksenOase",
+  "location": {
+    "x": 55.77777,
+    "y": 10.05000
+  }
+}]

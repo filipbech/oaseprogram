@@ -1,0 +1,57 @@
+[{
+    "date": {
+      "from": "Tue Jul 17 2017 07:30:00 GMT+0100 (CET)",
+      "to": "Tue Jul 17 2017 08:30:00 GMT+0100 (CET)"
+    },
+    "id": 1,
+    "title": "Morgenbøn: Klassisk morgensang",
+    "description": "Dagens Tidebøn er nu kommet i en 3. udgave. Vi bruger den som grundbog, suppleret med andet. Begynd dagen med en klassisk, meditativ bøn.",
+    "image": "",
+    "venueIds": [
+      1
+    ],
+    "categoryIds": [
+      1
+    ],
+    "speakerIds": [
+      1
+    ],
+    "favorite": false
+  }, {
+  "date": {
+    "from": "Tue Jul 17 2017 08:00:00 GMT+0100 (CET)",
+    "to": "Tue Jul 17 2017 09:00:00 GMT+0100 (CET)"
+  },
+  "id": 2,
+  "title": "Morgenløb med lægerne",
+  "description": "Alle er velkomne til morgenløb med lægerne. Der er ruter af forskellig længde.<br/>Vi mødes ved lægevognen på OaseTorbet. Der ligger en rute på endomondo: <a href=\"https://www.endomondo.com/routes/470264020\">her</a>. For dem der gerne vil løbe langt <a href=\"https://www.endomondo.com/routes/5796046\">her</a>.",
+  "image": "",
+  "venueIds": [
+    2
+  ],
+  "categoryIds": [
+    2
+  ],
+  "speakerIds": [],
+  "favorite": false
+},
+{
+  "date": {
+    "from": "Tue Jul 17 2017 09:50:00 GMT+0100 (CET)",
+    "to": "Tue Jul 17 2017 10:50:00 GMT+0100 (CET)"
+  },
+  "id": 3,
+  "title": "Bibeltime - Loven",
+  "description": "",
+  "image": "",
+  "venueIds": [
+    3
+  ],
+  "categoryIds": [
+    3
+  ],
+  "speakerIds": [
+    2
+  ],
+  "favorite": true
+}]

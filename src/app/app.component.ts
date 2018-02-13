@@ -5,6 +5,8 @@ import { Component } from '@angular/core';
   template: `
     <h1>OasePrgram</h1>
     <p>{{ message }}</p>
+
+    <app-program></app-program>
   `
 })
 export class AppComponent {
