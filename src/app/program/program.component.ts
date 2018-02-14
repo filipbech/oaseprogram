@@ -11,7 +11,7 @@ import { ProgramService } from './program.service';
   `
 })
 export class ProgramComponent {
-  program = this.programService.getProgram();
+  program = this.programService.programItems$;
 
   constructor(private programService: ProgramService) {}
 }
