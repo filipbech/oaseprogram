@@ -1,14 +1,24 @@
 import { Component } from '@angular/core';
+import { conf } from './configuration';
+
+import { info } from './icons/info';
+import { livestream } from './icons/livestream';
+import { program } from './icons/program';
+import { map } from './icons/map';
 
 @Component({
   selector: 'app-root',
   template: `
-    <h1>OasePrgram</h1>
-    <p>{{ message }}</p>
-
-    <app-program></app-program>
+    <header>${conf.title}</header>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+    <nav>
+      <a routerLinkActive="active" [routerLink]="['program', '2017-07-17']">${program} <span>Program</span></a>
+      <a routerLinkActive="active" [routerLink]="['map']">${map} <span>Kort</span></a>
+      <a routerLinkActive="active" [routerLink]="['livestream']">${livestream} <span>Livestream</span></a>
+      <a routerLinkActive="active" [routerLink]="['info']">${info} <span>Hvad er?</span></a>
+    </nav>
   `
 })
-export class AppComponent {
-  message = 'this works...';
-}
+export class AppComponent {}

@@ -1,0 +1,92 @@
+$purple1: #8c2b76;
+$purple2: #982f80;
+$lightpurple: #f3e9f1;
+$grey: #8b8b8b;
+
+$navHeight: 50px;
+
+$headlineFont: BreuerText;
+$textFont: Rooney;
+
+@import "fonts";
+
+* {
+  box-sizing:border-box;
+}
+body, html {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.3;
+  padding: 0;
+  font-family: $textFont;
+  height:100%;
+  background:linear-gradient($purple1 0px, $purple2 36px, #FFF 36px, #FFF calc(100% - #{$navHeight}), $lightpurple calc(100% - #{$navHeight}), $lightpurple);
+}
+p {
+  margin-bottom: 8px;
+}
+
+h1, h2, h3, h4, h5, header {
+  font-family: $headlineFont;
+  margin: 0 0 8px 0;
+}
+
+app-root {
+  height: 100%;
+  display:flex;
+  flex-direction: column;
+}
+.content {
+  overflow:scroll;
+  -webkit-overflow-scrolling: smooth;
+  flex: 1;
+  padding: 8px;
+}
+
+header {
+  text-align: center;
+  padding: 5px;
+  font-size: 20px;
+  color: #FFF;
+  background: linear-gradient($purple1, $purple2);
+  text-shadow: 2px 0px 6px rgba(0,0,0,0.2);
+  margin: 0;
+}
+
+nav {
+  background: $lightpurple;
+  color: $grey;
+  display: flex;
+  justify-content: space-around;
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    margin-bottom:3px;
+    .active {
+      opacity: 0;
+    }
+  }
+  a {
+    font-size: 11px;
+    width: 65px;
+    height: $navHeight;
+    color: inherit;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    &.active {
+      color: $purple1;
+      .active {
+        opacity: 1;
+      }
+      .inactive {
+        opacity: 0;
+      }
+    }
+  }
+
+}

@@ -30,9 +30,3 @@ export interface IVenue {
     y: string;
   };
 }
-
-export interface ISpeaker {
-  id: number;
-  title: string;
-  image: string;
-}

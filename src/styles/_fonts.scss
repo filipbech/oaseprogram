@@ -1,0 +1,41 @@
+@font-face {
+    font-family: $textFont;
+    src: url('../assets/fonts/rooney_light.eot');
+    src: url('../assets/fonts/rooney_light.eot?#iefix') format('embedded-opentype'),
+         url('../assets/fonts/rooney_light.woff2') format('woff2'),
+         url('../assets/fonts/rooney_light.woff') format('woff'),
+         url('../assets/fonts/rooney_light.ttf') format('truetype'),
+         url('../assets/fonts/rooney_light.svg#rooneylight') format('svg');
+    font-weight: normal;
+    font-style: light;
+}
+
+@font-face {
+    font-family: $textFont;
+    src: url('../assets/fonts/rooney_bold.eot');
+    src: url('../assets/fonts/rooney_bold.eot?#iefix') format('embedded-opentype'),
+         url('../assets/fonts/rooney_bold.woff2') format('woff2'),
+         url('../assets/fonts/rooney_bold.woff') format('woff'),
+         url('../assets/fonts/rooney_bold.ttf') format('truetype'),
+         url('../assets/fonts/rooney_bold.svg#rooneybold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face { font-family: $headlineFont;
+	src:url('../assets/fonts/breuertextwebltd-bold.eot');
+	src:url('../assets/fonts/breuertextwebltd-bold.eot?#iefix') format('embedded-opentype'),
+		url('../assets/fonts/breuertextwebltd-bold.woff') format('woff'),
+		url('../assets/fonts/breuertextwebltd-bold.ttf') format('truetype'),
+		url('../assets/fonts/breuertextwebltd-bold.svg#BreuerTextBold') format('svg');
+	font-weight: bold; font-style: normal;
+}
+
+@font-face { font-family: $headlineFont;
+	src:url('../assets/fonts/breuertextwebltd-regular.eot');
+	src:url('../assets/fonts/breuertextwebltd-regular.eot?#iefix') format('embedded-opentype'),
+		url('../assets/fonts/breuertextwebltd-regular.woff') format('woff'),
+		url('../assets/fonts/breuertextwebltd-regular.ttf') format('truetype'),
+		url('../assets/fonts/breuertextwebltd-regular.svg#BreuerTextRegular') format('svg');
+	font-weight: normal; font-style: normal;
+}

@@ -1,7 +1,7 @@
 [{
     "date": {
-      "from": "Tue Jul 17 2017 07:30:00 GMT+0100 (CET)",
-      "to": "Tue Jul 17 2017 08:30:00 GMT+0100 (CET)"
+      "from": "Mon Jul 17 2017 07:30:00 GMT+0100 (CET)",
+      "to": "Mon Jul 17 2017 08:30:00 GMT+0100 (CET)"
     },
     "id": 1,
     "title": "Morgenbøn: Klassisk morgensang",
@@ -19,8 +19,8 @@
     "favorite": false
   }, {
   "date": {
-    "from": "Tue Jul 17 2017 08:00:00 GMT+0100 (CET)",
-    "to": "Tue Jul 17 2017 09:00:00 GMT+0100 (CET)"
+    "from": "Mon Jul 17 2017 08:00:00 GMT+0100 (CET)",
+    "to": "Mon Jul 17 2017 09:00:00 GMT+0100 (CET)"
   },
   "id": 2,
   "title": "Morgenløb med lægerne",
@@ -37,15 +37,15 @@
 },
 {
   "date": {
-    "from": "Tue Jul 17 2017 09:50:00 GMT+0100 (CET)",
-    "to": "Tue Jul 17 2017 10:50:00 GMT+0100 (CET)"
+    "from": "Mon Jul 17 2017 09:50:00 GMT+0100 (CET)",
+    "to": "Mon Jul 17 2017 10:50:00 GMT+0100 (CET)"
   },
   "id": 3,
   "title": "Bibeltime - Loven",
   "description": "",
   "image": "",
   "venueIds": [
-    3
+    3, 1
   ],
   "categoryIds": [
     3

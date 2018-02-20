@@ -5,13 +5,19 @@ import { ProgramService } from './program.service';
   selector: 'app-program',
   template: `
     <h1>Program</h1>
+    <p>filter-options</p>
+    <button (click)="updateFilter()">Filter by venue = 1</button>
     <ul>
-      <li *ngFor="let item of program | async">{{ item.title }}</li>
+      <li *ngFor="let item of program | async">{{ item.title }} ❤️</li>
     </ul>
   `
 })
 export class ProgramComponent {
-  program = this.programService.programItems$;
+  program = this.programService.filteredProgramItems$;
+
+  updateFilter() {
+    this.programService.setFilter({ venueIds: 1 });
+  }
 
   constructor(private programService: ProgramService) {}
 }
