@@ -3,7 +3,13 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-live-stream',
   template: `
-    Show the youtube embed?
+    <h1>Livestream</h1>
+    <p>this is currently from ÅVM, but should show from SommerOase</p>
+    <iframe
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      src="//www.youtube.com/embed/live_stream?channel=UCgkGpoUYb7M543ZzLjAKaIQ"
+      allowfullscreen></iframe>
   `
 })
 export class LiveStreamComponent {
