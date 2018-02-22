@@ -14,8 +14,8 @@ import { map } from './icons/map';
       <router-outlet></router-outlet>
     </div>
     <nav>
-      <a routerLinkActive="active" [routerLink]="['program', '2017-07-17']">${program} <span>Program</span></a>
-      <a routerLinkActive="active" [routerLink]="['map']">${map} <span>Kort</span></a>
+      <a routerLinkActive="active" [routerLink]="['program']">${program} <span>Program</span></a>
+      <a routerLinkActive="active" [routerLink]="['venue']">${map} <span>Kort</span></a>
       <a routerLinkActive="active" [routerLink]="['livestream']">${livestream} <span>Livestream</span></a>
       <a routerLinkActive="active" [routerLink]="['info']">${info} <span>Hvad er?</span></a>
     </nav>

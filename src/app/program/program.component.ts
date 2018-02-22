@@ -4,19 +4,18 @@ import { ProgramService } from './program.service';
 @Component({
   selector: 'app-program',
   template: `
-    <h1>Program</h1>
-    <p>filter-options</p>
-    <button (click)="updateFilter()">Filter by venue = 1</button>
-    <ul>
-      <li *ngFor="let item of program | async">{{ item.title }} ❤️</li>
-    </ul>
+    <button (click)="updateFilter()">Filter by category = 1</button>
+
+  <div class="app-program-block">
+    <app-program-line *ngFor="let item of program | async" [event]="item"></app-program-line>
+  </div>
   `
 })
 export class ProgramComponent {
   program = this.programService.filteredProgramItems$;
 
   updateFilter() {
-    this.programService.setFilter({ venueIds: 1 });
+    this.programService.setFilter({ categoryIds: 1 });
   }
 
   constructor(private programService: ProgramService) {}

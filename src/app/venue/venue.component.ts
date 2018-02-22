@@ -1,15 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
-  selector: 'venue',
+  selector: 'app-venue',
   template: `
     Vis navn, info og program for Venue {{ id }}
   `
 })
-export class VenueComponent {
-
+export class VenueComponent implements OnInit {
   id = 0;
   destroy = new Subject();
 

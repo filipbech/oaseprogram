@@ -5,23 +5,48 @@ import { SpeakerComponent } from './speaker/speaker.component';
 import { HomeComponent } from './home.component';
 import { VenueComponent } from './venue/venue.component';
 import { MapComponent } from './venue/map.component';
+import { ProgramDetailComponent } from './program/program-detail.component';
+import { ProgramRedirectComponent } from './program/program-redirect.component';
+import { InfoPageComponent } from './info/info-page.component';
+import { LiveStreamComponent } from './livestream/live-stream.component';
 
 export const appRoutes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/program'
+  },
+  {
+    path: 'program',
+    component: ProgramRedirectComponent
+  },
   {
     path: 'program/:date',
     component: ProgramComponent
   },
   {
-    path: 'speaker/:speakerId',
+    path: 'program/event/:eventId',
+    component: ProgramDetailComponent
+  },
+  {
+    path: 'program/speaker/:speakerId',
     component: SpeakerComponent
+  },
+  {
+    path: 'venue',
+    component: MapComponent,
   },
   {
     path: 'venue/:venueId',
     component: VenueComponent
   },
   {
-    path: 'map',
-    component: MapComponent
+    path: 'livestream',
+    component: LiveStreamComponent,
+  },
+  {
+    path: 'info',
+    component: InfoPageComponent,
   },
   {
     path: '**',

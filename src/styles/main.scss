@@ -90,3 +90,44 @@ nav {
   }
 
 }
+
+
+.app-program-block {
+  margin:0 -8px;
+}
+app-program-line {
+  display:block;
+  position:relative;
+  a {
+    display:block;
+    height:100px;
+    position:relative;
+    padding:10px 10px 10px 18px;
+    border-bottom:1px solid #000;
+    text-decoration: none;
+    color:#000;
+    font-size:12px;
+  }
+  .title {
+    color:$purple1;
+    font-family: $headlineFont;
+    font-size:18px;
+  }
+  &:before {
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    width:8px;
+    display:block;
+    background-color:currentColor;
+  }
+
+  svg {
+    width:10px;
+    height:10px;
+    display:inline-block;
+    vertical-align: middle;
+  }
+}

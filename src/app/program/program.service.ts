@@ -10,6 +10,7 @@ import { get, set } from 'idb-keyval';
 
 import { combineLatest } from 'rxjs/operators/combineLatest';
 import { map } from 'rxjs/operators/map';
+import { Observable } from 'rxjs/Observable';
 
 const CACHE_KEY = 'programdata';
 
@@ -42,6 +43,13 @@ export class ProgramService {
 
   public setFilter(settings) {
     this.filterSubject.next(settings);
+  }
+
+  public getProgramItem(eventId: number): Observable<IProgramItem> {
+    return this.programItems$.pipe(
+      map(value => {
+        return value.find(item => item.id === eventId);
+      }));
   }
 
   public updateProgram() {
