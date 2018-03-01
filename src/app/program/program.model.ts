@@ -26,7 +26,11 @@ export interface IVenue {
   id: number;
   title: string;
   location: {
-    x: string;
-    y: string;
+    lat: string;
+    lng: string;
+  };
+  pct?: {
+    top: number;
+    left: number;
   };
 }

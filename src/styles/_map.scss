@@ -1,0 +1,35 @@
+.map-container {
+  width:100%;
+  overflow:scroll;
+}
+
+.map {
+  background:url('/assets/map.jpg');
+  width:1058px;
+  height:433px;
+  background-size: 1058px 433px;
+  position: relative;
+}
+
+.point {
+  position:absolute;
+  display:block;
+  width:14px;
+  height:14px;
+  border-radius: 50%;
+  transform:translate(-50%, -50%);
+  background:yellow;
+}
+
+
+.me {
+  position:absolute;
+  display:none;
+  width:8px;
+  height:8px;
+  border-radius: 50%;
+  transform:translate(-50%, -50%);
+  background:blue;
+  pointer-events: none;
+  z-index:9;
+}
