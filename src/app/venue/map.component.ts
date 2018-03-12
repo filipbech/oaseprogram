@@ -39,13 +39,13 @@ export class MapComponent implements OnInit, OnDestroy {
   watchId: number;
 
   mapSize = {
-    width: 1058,
-    height: 433
+    width: 1158,
+    height: 619
   };
 
   mapBounds = {
-    latitude: [-25.1, 61.2],
-    longitude: [-125.2, 140.7]
+    latitude: [56.125205, 56.117716],
+    longitude: [10.120664, 10.145729]
   };
 
   venues: Observable<IVenue[]>;
