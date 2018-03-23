@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { VenueService } from './venue.service';
 import { Observable } from 'rxjs/Observable';
-import { IVenue } from '../program/program.model';
+import { IVenue, IPosition } from '../program/program.model';
 import { map } from 'rxjs/operators/map';
 import { Router } from '@angular/router';
 
@@ -10,8 +10,12 @@ import { Router } from '@angular/router';
   template: `
   <div class="map-container" #container>
     <div class="map">
-      <div class="me" #me>
-        <span class="point">
+      <div class="me"
+          *ngIf="me.inView"
+          [style.top]="me.top+'%'"
+          [style.left]="me.left+'%'">
+        >
+        <span class="me-point">
           <span class="pulse"></span>
         </span>
       </div>
@@ -32,7 +36,7 @@ import { Router } from '@angular/router';
 })
 export class MapComponent implements OnInit, OnDestroy {
 
-  @ViewChild('me') me: ElementRef;
+  me: Partial<IPosition> = { inView: false };
   @ViewChild('container') container: ElementRef;
 
   showBtn = true;
@@ -91,17 +95,13 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   locationUpdate({ timestamp, coords: { accuracy, latitude, longitude } }) {
-    const pos = this.calculatePctFromLatLng(latitude, longitude);
+    this.me = this.calculatePctFromLatLng(latitude, longitude);
 
     if (this.showBtn) {
-      const pixelsFromLeft = (this.mapSize.width * pos.left / 100) - (this.container.nativeElement.getBoundingClientRect().width / 2);
+      const pixelsFromLeft = (this.mapSize.width * this.me.left / 100) - (this.container.nativeElement.getBoundingClientRect().width / 2);
       this.container.nativeElement.scrollTo(pixelsFromLeft, 0);
       this.showBtn = false;
     }
-
-    this.me.nativeElement.style.display = pos.inView ? 'block' : 'none';
-    this.me.nativeElement.style.top = pos.top + '%';
-    this.me.nativeElement.style.left = pos.left + '%';
   }
 
   ngOnDestroy() {

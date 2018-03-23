@@ -42,7 +42,6 @@
 }
 
 .me {
-  display:none;
   pointer-events: none;
   z-index:9;
   width: 100%;
@@ -57,7 +56,7 @@
   animation-duration: 0.5s;
   transform:translate(-50%, -50%);
 
-  .point {
+  .me-point {
     background: #2ba7d9;
     border: 1px solid #0f7baf;
     display: block;

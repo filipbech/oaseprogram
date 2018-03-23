@@ -29,9 +29,11 @@ export interface IVenue {
     lat: string;
     lng: string;
   };
-  position?: {
-    inView: boolean;
-    top: number;
-    left: number;
-  };
+  position?: IPosition ;
+}
+
+export interface IPosition {
+  inView: boolean;
+  top: number;
+  left: number;
 }
