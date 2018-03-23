@@ -29,7 +29,8 @@ export interface IVenue {
     lat: string;
     lng: string;
   };
-  pct?: {
+  position?: {
+    inView: boolean;
     top: number;
     left: number;
   };

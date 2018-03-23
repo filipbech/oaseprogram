@@ -16,17 +16,18 @@ import { Router } from '@angular/router';
         </span>
       </div>
 
-      <button
-        class="point"
-        *ngFor="let point of venues | async"
-        (click)="onPointClicked(point)"
-        [style.top]="point.pct.top+'%'"
-        [style.left]="point.pct.left+'%'"></button>
+      <ng-container  *ngFor="let point of venues | async">
+        <button
+          *ngIf="point.position.inView"
+          class="point"
+          (click)="onPointClicked(point)"
+          [style.top]="point.position.top+'%'"
+          [style.left]="point.position.left+'%'"></button>
+      </ng-container>
 
     </div>
   </div>
-
-    <button (click)="showMe()" *ngIf="showBtn">where am i?</button>
+  <button (click)="watchLocation()" *ngIf="showBtn">where am i?</button>
   `
 })
 export class MapComponent implements OnInit, OnDestroy {
@@ -55,10 +56,22 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    if ('permissions' in navigator) {
+      navigator['permissions'].query({ 'name': 'geolocation' }).then(status => {
+        if (status.state === 'granted') {
+          this.watchLocation();
+        }
+        if (status.state === 'denied') {
+          this.showBtn = false;
+        }
+      });
+    }
+
     this.venues = this.venueService.venues$.pipe(map(venues => {
       return venues.map(venue => {
         return Object.assign({}, venue, {
-          pct: {
+          position: {
             ...this.calculatePctFromLatLng(venue.location.lat, venue.location.lng)
           }
         });
@@ -69,23 +82,26 @@ export class MapComponent implements OnInit, OnDestroy {
   calculatePctFromLatLng(lat, lng) {
     const top = 100 * ((lat - this.mapBounds.latitude[0]) / (this.mapBounds.latitude[1] - this.mapBounds.latitude[0]));
     const left = 100 * ((lng - this.mapBounds.longitude[0]) / (this.mapBounds.longitude[1] - this.mapBounds.longitude[0]));
-    return { top, left };
+    const inView = top > 0 && top < 100 && left > 0 && left < 100;
+    return { top, left, inView };
   }
 
-  showMe() {
-    this.watchId = navigator.geolocation.watchPosition(({ timestamp, coords: { accuracy, latitude, longitude } }) => {
-      const pos = this.calculatePctFromLatLng(latitude, longitude);
+  watchLocation() {
+    this.watchId = navigator.geolocation.watchPosition(this.locationUpdate);
+  }
 
-      if (this.showBtn) {
-        const pixelsFromLeft = (this.mapSize.width * pos.left / 100) - (this.container.nativeElement.getBoundingClientRect().width / 2);
-        this.container.nativeElement.scrollTo(pixelsFromLeft, 0);
-        this.showBtn = false;
-      }
+  locationUpdate({ timestamp, coords: { accuracy, latitude, longitude } }) {
+    const pos = this.calculatePctFromLatLng(latitude, longitude);
 
-      this.me.nativeElement.style.display = 'block';
-      this.me.nativeElement.style.top = pos.top + '%';
-      this.me.nativeElement.style.left = pos.left + '%';
-    });
+    if (this.showBtn) {
+      const pixelsFromLeft = (this.mapSize.width * pos.left / 100) - (this.container.nativeElement.getBoundingClientRect().width / 2);
+      this.container.nativeElement.scrollTo(pixelsFromLeft, 0);
+      this.showBtn = false;
+    }
+
+    this.me.nativeElement.style.display = pos.inView ? 'block' : 'none';
+    this.me.nativeElement.style.top = pos.top + '%';
+    this.me.nativeElement.style.left = pos.left + '%';
   }
 
   ngOnDestroy() {
@@ -97,5 +113,7 @@ export class MapComponent implements OnInit, OnDestroy {
   constructor(
     private venueService: VenueService,
     private router: Router
-  ) {}
+  ) {
+    this.locationUpdate = this.locationUpdate.bind(this);
+  }
 }
