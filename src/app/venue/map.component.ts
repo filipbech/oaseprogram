@@ -28,10 +28,9 @@ import { Router } from '@angular/router';
           [style.top]="point.position.top+'%'"
           [style.left]="point.position.left+'%'"></button>
       </ng-container>
-
     </div>
+    <button class="locate-me-btn" (click)="watchLocation()" *ngIf="showBtn">Activate map</button>
   </div>
-  <button (click)="watchLocation()" *ngIf="showBtn">where am i?</button>
   `
 })
 export class MapComponent implements OnInit, OnDestroy {
@@ -60,10 +59,10 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     if ('permissions' in navigator) {
       navigator['permissions'].query({ 'name': 'geolocation' }).then(status => {
         if (status.state === 'granted') {
+          this.showBtn = false;
           this.watchLocation();
         }
         if (status.state === 'denied') {
