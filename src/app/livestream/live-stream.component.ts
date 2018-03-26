@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
       <iframe
         frameborder="0"
         allow="autoplay; encrypted-media"
-        src="//www.youtube.com/embed/live_stream?channel=UCgkGpoUYb7M543ZzLjAKaIQ"
+        src="//www.youtube.com/embed/live_stream?channel=UC8-K5ImW5BxS07OgpmSlyPQ"
         allowfullscreen></iframe>
     </div>
   `
