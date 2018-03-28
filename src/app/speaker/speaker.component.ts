@@ -1,31 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { takeUntil } from 'rxjs/operators/takeUntil';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/observable';
 
-import { SpeakerService } from './speaker.service';
-import { ISpeaker } from './speaker.model';
 import { switchMap } from 'rxjs/operators/switchMap';
+import { ISpeaker } from '../data.model';
+import { DataService } from '../data.service';
 
 @Component({
-  selector: 'speaker',
+  selector: 'app-speaker',
   template: `
-    <h1>{{ (speaker | async)?.title }}</h1>
-    <p>her er en beskrivelse</p>
-    Links til program-punkter med denne taler...
+  <div *ngIf="speaker">
+    <h1>{{ speaker.name }}</h1>
+    <img [src]="speaker.imgUrl" [alt]="speaker.name" />
+    <div [innerHTML]="speaker.desc"></div>
+    <p>Her taler denne taler??</p>
+  </div>
   `
 })
-export class SpeakerComponent {
+export class SpeakerComponent implements OnInit, OnDestroy {
+  speaker: ISpeaker;
 
   destroy = new Subject();
 
-  speaker = this.activatedRoute.params
-    .pipe(
+  ngOnInit() {
+    this.activatedRoute.params.pipe(
       takeUntil(this.destroy),
-      switchMap(params => this.speakerService.getSpeaker(parseFloat(params['speakerId'])))
-    );
+      switchMap(params => this.dataService.getSpeaker(parseFloat(params['speakerId'])))
+    ).subscribe(speaker => this.speaker = speaker);
+  }
 
   ngOnDestroy() {
     this.destroy.next();
@@ -34,6 +39,6 @@ export class SpeakerComponent {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private speakerService: SpeakerService
-  ) {}
+    private dataService: DataService
+  ) { }
 }

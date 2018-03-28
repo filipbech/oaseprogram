@@ -10,6 +10,7 @@ import { LiveStreamModule } from './livestream/live-stream.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
+import { DataService } from './data.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,9 @@ import { HomeComponent } from './home.component';
     InfoModule,
     LiveStreamModule
   ],
-  providers: [],
+  providers: [
+    DataService
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

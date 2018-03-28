@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle  } from '@angular/router';
+
 import { ProgramComponent } from './program/program.component';
 import { SpeakerComponent } from './speaker/speaker.component';
 import { HomeComponent } from './home.component';

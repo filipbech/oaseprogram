@@ -152,3 +152,40 @@ app-live-stream {
 
 
 @import "map";
+
+
+.program-header {
+  position:relative;
+  text-align: center;
+  h3 {
+
+  }
+
+  svg {
+    display:inline-block;
+    width:11px;
+    height:18px;
+    line-height:20px;
+  }
+
+  a {
+    position:absolute;
+    display:block;
+    top:0;
+    width:20px;
+    height:20px;
+    line-height:20px;
+    border:1px solid #999;
+    border-radius:3px;
+    text-align: center;
+  }
+  a.previous-day {
+    left:10px;
+    svg {
+      transform:rotate(180deg);
+    }
+  }
+  a.next-day {
+    right:10px;
+  }
+}

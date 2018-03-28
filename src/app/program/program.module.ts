@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ProgramComponent } from './program.component';
-import { ProgramService } from './program.service';
 import { CoreModule } from '../core.module';
 import { ProgramLineComponent } from './program-line.component';
 import { ProgramDetailComponent } from './program-detail.component';
@@ -15,9 +14,6 @@ import { ProgramRedirectComponent } from './program-redirect.component';
   ],
   imports: [
     CoreModule
-  ],
-  providers: [
-    ProgramService
   ],
   exports: [
     ProgramComponent,

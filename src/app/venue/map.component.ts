@@ -1,9 +1,9 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { VenueService } from './venue.service';
 import { Observable } from 'rxjs/Observable';
-import { IVenue, IPosition } from '../program/program.model';
 import { map } from 'rxjs/operators/map';
 import { Router } from '@angular/router';
+import { IVenue, IPosition } from '../data.model';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-map',
@@ -20,13 +20,13 @@ import { Router } from '@angular/router';
         </span>
       </div>
 
-      <ng-container  *ngFor="let point of venues | async">
+      <ng-container *ngFor="let venue of venues | async">
         <button
-          *ngIf="point.position.inView"
+          *ngIf="venue.position.inView"
           class="point"
-          (click)="onPointClicked(point)"
-          [style.top]="point.position.top+'%'"
-          [style.left]="point.position.left+'%'"></button>
+          (click)="onPointClicked(venue)"
+          [style.top]="venue.position.top+'%'"
+          [style.left]="venue.position.left+'%'"></button>
       </ng-container>
     </div>
     <button class="locate-me-btn" (click)="watchLocation()" *ngIf="showBtn">Activate map</button>
@@ -71,22 +71,29 @@ export class MapComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.venues = this.venueService.venues$.pipe(map(venues => {
-      return venues.map(venue => {
-        return Object.assign({}, venue, {
-          position: {
-            ...this.calculatePctFromLatLng(venue.location.lat, venue.location.lng)
-          }
+    this.venues = this.dataService.venues$.pipe(map(venues => {
+      return venues
+        .filter(venue => !!venue.location)
+        .map(venue => {
+          return Object.assign({}, venue, {
+            position: {
+              ...this.calculatePctFromLatLng(venue.location.lat, venue.location.lng)
+            }
+          });
         });
-      });
     }));
   }
 
   calculatePctFromLatLng(lat, lng) {
+    // TODO: FBB don't use FAKE
+    return { top: Math.random() * 100, left: Math.random() * 100, inView: true };
+/*
     const top = 100 * ((lat - this.mapBounds.latitude[0]) / (this.mapBounds.latitude[1] - this.mapBounds.latitude[0]));
     const left = 100 * ((lng - this.mapBounds.longitude[0]) / (this.mapBounds.longitude[1] - this.mapBounds.longitude[0]));
     const inView = top > 0 && top < 100 && left > 0 && left < 100;
+
     return { top, left, inView };
+*/
   }
 
   watchLocation() {
@@ -110,8 +117,8 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private venueService: VenueService,
-    private router: Router
+    private router: Router,
+    private dataService: DataService
   ) {
     this.locationUpdate = this.locationUpdate.bind(this);
   }

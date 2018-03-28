@@ -3,9 +3,6 @@ import { CoreModule } from '../core.module';
 
 import { VenueComponent } from './venue.component';
 import { MapComponent } from './map.component';
-import { VenueService } from './venue.service';
-
-
 
 @NgModule({
   declarations: [
@@ -14,9 +11,6 @@ import { VenueService } from './venue.service';
   ],
   imports: [
     CoreModule
-  ],
-  providers: [
-    VenueService
   ],
   exports: [
     VenueComponent,
