@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { DataService, IEvent, ITrack } from '../data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -25,7 +25,7 @@ import { map } from 'rxjs/operators/map';
   </div>
 
   <label>Viser:
-    <select (change)="onChange($event.target.value)">
+    <select (change)="onChange($event.target.value)" #select>
       <option value="">Alle spor</option>
       <option *ngFor="let track of tracks | async" [value]="track.id">{{ track.name }}</option>
     </select>
@@ -33,10 +33,16 @@ import { map } from 'rxjs/operators/map';
 
   <div class="app-program-block">
     <app-program-line *ngFor="let event of events | async" [event]="event"></app-program-line>
+    <div *ngIf="(events | async)?.length < 1">
+      Ingen programpunkter matcher dine valg.
+      <button (click)="onChange('reset')">Fjern valg</button>
+    </div>
   </div>
   `
 })
 export class ProgramComponent implements OnDestroy {
+
+  @ViewChild('select') select: ElementRef;
 
   destroy = new Subject();
 
@@ -67,6 +73,11 @@ export class ProgramComponent implements OnDestroy {
     );
 
   onChange(value) {
+    if (value === 'reset') {
+      // set by remove-filter Button
+      value = '';
+      this.select.nativeElement.value = value;
+    }
     this.filterSubject.next(parseFloat(value));
   }
 

@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { clock } from '../icons/clock';
 import { IEvent } from '../data.model';
 
@@ -8,20 +8,25 @@ import { IEvent } from '../data.model';
     <a [routerLink]="['/program/event', event.id]">
       <div class="time">
         ${clock}
-        {{ event.date.start | date:'shortTime' }} - {{ event.date.end | date:'shortTime' }}
+        {{ event.date.start | date: 'HH:mm' }} - {{ event.date.end | date: 'HH:mm' }}
+        <ng-container *ngIf="displayDay">
+          ({{event.day}})
+        </ng-container>
       </div>
       <div class="title">{{ event.name }}</div>
-      <div class="category">{{ event.track }}</div>
-      <div class="venue">{{ event.venue }}</div>
+      <div class="category">{{ event.trackName }}</div>
     </a>
   `
 })
 export class ProgramLineComponent implements OnChanges {
   @Input() event: IEvent;
+  @Input() displayDay: Boolean = false;
 
-  @HostBinding('style.color') color;
+  dayNames = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
 
   ngOnChanges() {
-    this.color = this.event.track === 246643922 ? 'blue' : 'green';
+    if (this.displayDay) {
+      this.event['day'] = this.dayNames[new Date(this.event.date.start).getDay()];
+    }
   }
 }

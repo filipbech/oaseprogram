@@ -22,8 +22,8 @@ body, html {
   height:100%;
   background:linear-gradient($purple1 0px, $purple2 36px, #FFF 36px, #FFF calc(100% - #{$navHeight}), $lightpurple calc(100% - #{$navHeight}), $lightpurple);
 }
-p {
-  margin-bottom: 8px;
+p, img {
+  margin: 0 0 8px 0;
 }
 
 h1, h2, h3, h4, h5, header {
@@ -91,18 +91,30 @@ nav {
 
 }
 
+app-program {
+  label {
+    margin-bottom: 10px;
+    display:block;
+    text-align: center;
+  }
+}
+
+select {
+  border:1px solid #000;
+}
 
 .app-program-block {
   margin:0 -8px;
+  border-top:1px solid #000;
+
 }
 app-program-line {
   display:block;
   position:relative;
   a {
     display:block;
-    height:100px;
     position:relative;
-    padding:10px 10px 10px 18px;
+    padding:10px;
     border-bottom:1px solid #000;
     text-decoration: none;
     color:#000;
@@ -113,18 +125,10 @@ app-program-line {
     font-family: $headlineFont;
     font-size:18px;
   }
-  &:before {
-    content:'';
-    position:absolute;
-    top:0;
-    left:0;
-    bottom:0;
-    width:8px;
-    display:block;
-    background-color:currentColor;
-  }
+}
 
-  svg {
+.time, .location, .speaker {
+    svg {
     width:10px;
     height:10px;
     display:inline-block;
@@ -148,6 +152,13 @@ app-live-stream {
     }
   }
 }
+
+app-program-detail {
+  img {
+    max-width: 100%;
+  }
+}
+
 
 
 

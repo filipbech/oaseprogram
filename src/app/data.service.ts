@@ -13,8 +13,8 @@ const CACHE_KEY = 'data';
 
 const ONE_DAY = 86400000; // 24 hours in ms
 
-const APIURL = '/assets/api/data.json';
-// const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
+// const APIURL = '/assets/api/data.json';
+const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
 
 @Injectable()
 export class DataService {
@@ -31,7 +31,17 @@ export class DataService {
   public venues$ = this.dataSubject.pipe(map(result => result.venues), /*share()*/);
   public speakers$ = this.dataSubject.pipe(map(result => result.speakers), /*share()*/);
   public events$ = this.dataSubject.pipe(
-    map(result => result.events.sort((eventA, eventB) => eventA.date.start - eventB.date.start)),
+    map(result => result.events.sort((eventA, eventB) => eventA.date.start - eventB.date.start).map(event => {
+      const eventTrack = this.dataSubject.getValue().tracks.find(track => track.id === event.track);
+      const eventSpeaker = this.dataSubject.getValue().speakers.find(speaker => speaker.id === event.speaker);
+      const eventVenue = this.dataSubject.getValue().venues.find(venue => venue.id === event.venue);
+      return {
+        ...event,
+        trackName: eventTrack ? eventTrack.name : null,
+        speakerName: eventSpeaker ? eventSpeaker.name : null,
+        venueName: eventVenue ? eventVenue.name : null
+      };
+    })),
     /*share()*/
   );
   public info$ = this.dataSubject.pipe(map(result => result.info), /*share()*/);
@@ -48,6 +58,12 @@ export class DataService {
     const end = start + ONE_DAY;
     return this.events$.pipe(map(events => events.filter(event => {
       return event.date.start > start && event.date.start < end;
+    })));
+  }
+
+  public getEventsBySpeaker(speakerId: number) {
+    return this.events$.pipe(map(events => events.filter(event => {
+      return event.speaker === speakerId;
     })));
   }
 

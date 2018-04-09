@@ -41,6 +41,7 @@ export interface IEvent {
   translations: string; // is it really?
   livestream: boolean;
   track: number;
+  trackName?: string;
   venue: number;
   speaker: number;
   image: string;

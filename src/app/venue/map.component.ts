@@ -14,7 +14,6 @@ import { DataService } from '../data.service';
           *ngIf="me.inView"
           [style.top]="me.top+'%'"
           [style.left]="me.left+'%'">
-        >
         <span class="me-point">
           <span class="pulse"></span>
         </span>
