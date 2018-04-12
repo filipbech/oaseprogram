@@ -13,8 +13,8 @@ const CACHE_KEY = 'data';
 
 const ONE_DAY = 86400000; // 24 hours in ms
 
-// const APIURL = '/assets/api/data.json';
-const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
+const APIURL = '/assets/api/data.json';
+//const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
 
 @Injectable()
 export class DataService {
