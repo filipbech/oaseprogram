@@ -8,6 +8,7 @@ $navHeight: 50px;
 $headlineFont: BreuerText;
 $textFont: Rooney;
 
+@import "reset";
 @import "fonts";
 
 * {
@@ -110,6 +111,7 @@ app-program {
 
 select {
   border:1px solid #000;
+  font-size:16px;
 }
 
 .app-program-block {
@@ -225,6 +227,8 @@ app-accordion {
     display:block;
     width:100%;
     text-align: left;
+    border:0;
+    background:none;
     svg {
       position:absolute;
       display: inline-block;
@@ -242,7 +246,7 @@ app-accordion {
     font-size:12px;
     app-accordion {
       margin-left:-16px;
-      padding-left:16px;
+      padding-left:24px;
     }
   }
 
