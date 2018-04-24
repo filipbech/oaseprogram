@@ -25,7 +25,7 @@ import { DataService } from '../data.service';
           class="point"
           (click)="onPointClicked(venue)"
           [style.top]="venue.position.top+'%'"
-          [style.left]="venue.position.left+'%'"></button>
+          [style.left]="venue.position.left+'%'">{{venue.number}}</button>
       </ng-container>
     </div>
     <button class="locate-me-btn" (click)="watchLocation()" *ngIf="showBtn">Activate map</button>
@@ -54,7 +54,7 @@ export class MapComponent implements OnInit, OnDestroy {
   venues: Observable<IVenue[]>;
 
   onPointClicked(point: IVenue) {
-    this.router.navigateByUrl('/venue/' + point.id);
+    alert(point.name);
   }
 
   ngOnInit() {

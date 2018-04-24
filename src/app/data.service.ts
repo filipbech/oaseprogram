@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators/map';
 import { share } from 'rxjs/operators/share';
 import { get, set } from 'idb-keyval';
 
-import { IApiResult } from './data.model';
+import { IApiResult, IInfoCategory } from './data.model';
 export * from './data.model';
 
 const CACHE_KEY = 'data';
@@ -24,16 +24,20 @@ export class DataService {
     venues: [],
     tracks: [],
     events: [],
-    info: ''
+    infoCategories: [],
+    infoContent: []
   });
 
   public tracks$ = this.dataSubject.pipe(map(result => result.tracks), /*share()*/);
-  public venues$ = this.dataSubject.pipe(map(result => result.venues), /*share()*/);
+  public venues$ = this.dataSubject.pipe(map(result => result.venues.map(venue => {
+    venue.number = Math.floor(Math.random() * 100);
+    return venue;
+  })), /*share()*/);
   public speakers$ = this.dataSubject.pipe(map(result => result.speakers), /*share()*/);
   public events$ = this.dataSubject.pipe(
     map(result => result.events.sort((eventA, eventB) => eventA.date.start - eventB.date.start).map(event => {
-      const eventTrack = this.dataSubject.getValue().tracks.find(track => track.id === event.track);
-      const eventSpeaker = this.dataSubject.getValue().speakers.find(speaker => speaker.id === event.speaker);
+      const eventTrack = this.dataSubject.getValue().tracks.find(track => track.id === event.tracks[0]);
+      const eventSpeaker = this.dataSubject.getValue().speakers.find(speaker => speaker.id === event.speakers[0]);
       const eventVenue = this.dataSubject.getValue().venues.find(venue => venue.id === event.venue);
       return {
         ...event,
@@ -44,7 +48,12 @@ export class DataService {
     })),
     /*share()*/
   );
-  public info$ = this.dataSubject.pipe(map(result => result.info), /*share()*/);
+  public infoCategory$ = this.dataSubject.pipe(map(result => {
+    return result.infoCategories.map(category => {
+      category.content = result.infoContent.filter(content => content.category === category.id);
+      return category;
+    });
+  }), /*share()*/);
 
   public getVenue(id: number) {
     return this.venues$.pipe(map(venues => venues.find(venue => venue.id === id)));
@@ -63,7 +72,7 @@ export class DataService {
 
   public getEventsBySpeaker(speakerId: number) {
     return this.events$.pipe(map(events => events.filter(event => {
-      return event.speaker === speakerId;
+      return event.speakers[0] === speakerId;
     })));
   }
 

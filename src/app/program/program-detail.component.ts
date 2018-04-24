@@ -21,7 +21,7 @@ import { user } from '../icons/user';
       </div>
       <div class="location" *ngIf="event.venue">
         ${locationPin}
-        <a [routerLink]="['/venue', event.venue]" *ngIf="event.venueName">{{event.venueName}}</a>
+        <span *ngIf="event.venueName">{{event.venueName}}</span>
       </div>
       <div class="speaker" *ngIf="event.speakerName">
         ${user}

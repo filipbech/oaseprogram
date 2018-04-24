@@ -14,7 +14,8 @@ import { IEvent } from '../data.model';
         </ng-container>
       </div>
       <div class="title">{{ event.name }}</div>
-      <div class="category">{{ event.trackName }}</div>
+      <div class="category">{{ event.speakerName }}</div>
+      <div class="category">{{ event.trackName }}, {{ event.venueName }}</div>
     </a>
   `
 })

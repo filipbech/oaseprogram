@@ -10,6 +10,7 @@ export interface IVenue {
   name: string;
   location: ICoordinateSet;
   type: string;
+  number: number;
   position?: IPosition;
 }
 
@@ -27,9 +28,10 @@ export interface ICoordinateSet {
 export interface ITrack {
   id: number;
   name: string;
-  desc: string;
+  desc: string; /* take this out? */
   type: string;
   logo: string;
+  imgUrl: string;
 }
 
 export interface IEvent {
@@ -40,11 +42,11 @@ export interface IEvent {
   languages: string[];
   translations: string; // is it really?
   livestream: boolean;
-  track: number;
+  tracks: number[];
   trackName?: string;
+  speakers: number[];
   venue: number;
-  speaker: number;
-  image: string;
+  imgUrl: string;
 }
 
 export interface IDateRange {
@@ -57,5 +59,20 @@ export interface IApiResult {
   venues: IVenue[];
   tracks: ITrack[];
   events: IEvent[];
-  info: string;
+  infoCategories: IInfoCategory[];
+  infoContent: IInfoContent[];
+}
+
+export interface IInfoCategory {
+  id: number;
+  name: string;
+  desc: string;
+  content?: IInfoContent[];
+}
+
+export interface IInfoContent {
+  id: number;
+  header: string;
+  content: string;
+  category: number;
 }

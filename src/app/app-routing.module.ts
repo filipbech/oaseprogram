@@ -4,7 +4,6 @@ import { Routes, RouterModule, RouteReuseStrategy, ActivatedRouteSnapshot, Detac
 import { ProgramComponent } from './program/program.component';
 import { SpeakerComponent } from './speaker/speaker.component';
 import { HomeComponent } from './home.component';
-import { VenueComponent } from './venue/venue.component';
 import { MapComponent } from './venue/map.component';
 import { ProgramDetailComponent } from './program/program-detail.component';
 import { ProgramRedirectComponent } from './program/program-redirect.component';
@@ -36,10 +35,6 @@ export const appRoutes: Routes = [
   {
     path: 'venue',
     component: MapComponent,
-  },
-  {
-    path: 'venue/:venueId',
-    component: VenueComponent
   },
   {
     path: 'livestream',

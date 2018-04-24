@@ -33,9 +33,9 @@ import { map } from 'rxjs/operators/map';
 
   <div class="app-program-block">
     <app-program-line *ngFor="let event of events | async" [event]="event"></app-program-line>
-    <div *ngIf="(events | async)?.length < 1">
-      Ingen programpunkter matcher dine valg.
-      <button (click)="onChange('reset')">Fjern valg</button>
+    <div *ngIf="(events | async)?.length < 1" class="no-events">
+      Ingen programpunkter matcher dine valg.<br/>
+      <button (click)="onChange('reset')">Vis alle</button>
     </div>
   </div>
   `
@@ -68,7 +68,7 @@ export class ProgramComponent implements OnDestroy {
       switchMap(params => this.dataService.getEventsByDate(params['date'])),
       combineLatest(this.filterSubject.asObservable()),
       map(([events, filter]) => {
-        return events.filter((event: IEvent) => filter ? event.track === filter : true);
+        return events.filter((event: IEvent) => filter ? event.tracks[0] === filter : true);
       })
     );
 

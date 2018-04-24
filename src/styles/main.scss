@@ -97,6 +97,15 @@ app-program {
     display:block;
     text-align: center;
   }
+  .no-events {
+    padding:35px;
+    text-align: center;
+    font-size:18px;
+    button {
+      border:1px solid #000;
+      color:$purple1;
+    }
+  }
 }
 
 select {
@@ -174,20 +183,21 @@ app-program-detail {
 
   svg {
     display:inline-block;
-    width:11px;
-    height:18px;
+    width:15px;
+    height:24px;
     line-height:20px;
+    polygon {
+      fill: $purple1;
+    }
   }
 
   a {
     position:absolute;
     display:block;
     top:0;
-    width:20px;
-    height:20px;
-    line-height:20px;
-    border:1px solid #999;
-    border-radius:3px;
+    width:24px;
+    height:24px;
+    line-height:24px;
     text-align: center;
   }
   a.previous-day {
@@ -198,5 +208,51 @@ app-program-detail {
   }
   a.next-day {
     right:10px;
+  }
+}
+
+
+app-accordion {
+  display:block;
+  margin:0 -8px;
+  padding: 4px 8px;
+  .accordion__title {
+    margin:0 0 8px;
+    padding:0;
+    text-decoration: underline;
+    font-weight:bold;
+    position: relative;
+    display:block;
+    width:100%;
+    text-align: left;
+    svg {
+      position:absolute;
+      display: inline-block;
+      width:10px;
+      height:10px;
+      right:0px;
+      top:2px;
+      transform:rotate(90deg);
+      polygon {
+        fill:currentColor;
+      }
+    }
+  }
+  .accordion__content {
+    font-size:12px;
+    app-accordion {
+      margin-left:-16px;
+      padding-left:16px;
+    }
+  }
+
+  &.open {
+    background:rgba(0,0,0,0.03);
+    > .accordion__title {
+      color: $purple1;
+      svg {
+        transform:rotate(-90deg);
+      }
+    }
   }
 }

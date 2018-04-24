@@ -15,11 +15,16 @@
 .point {
   position:absolute;
   display:block;
-  width:14px;
-  height:14px;
+  width:18px;
+  height:18px;
   border-radius: 50%;
   transform:translate(-50%, -50%);
-  background:yellow;
+  background:$purple1;
+  color:#fff;
+  font-size:10px;
+  line-height:15px;
+  padding:0;
+  text-align: center;
 }
 
 .locate-me-btn {
