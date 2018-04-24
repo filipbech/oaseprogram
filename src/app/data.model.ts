@@ -45,7 +45,9 @@ export interface IEvent {
   tracks: number[];
   trackName?: string;
   speakers: number[];
+  speakerName?: string;
   venue: number;
+  venueName?: string;
   imgUrl: string;
 }
 
