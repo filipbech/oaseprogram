@@ -33,7 +33,7 @@ export const appRoutes: Routes = [
     component: SpeakerComponent
   },
   {
-    path: 'venue',
+    path: 'map',
     component: MapComponent,
   },
   {

@@ -13,6 +13,7 @@ import { HomeComponent } from './home.component';
 import { DataService } from './data.service';
 
 import { PositionService } from './venue/position.service';
+import { TrackingService } from './tracking.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PositionService } from './venue/position.service';
   ],
   providers: [
     DataService,
-    PositionService
+    PositionService,
+    TrackingService
   ],
   bootstrap: [ AppComponent ]
 })

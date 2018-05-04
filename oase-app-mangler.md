@@ -4,9 +4,9 @@
 * App-title som link til /program
 * manifest og serviceworker til off-line
 * styling / design (+ desktop)
-* noget analytics / tracking
 * mapBounds
+* mapDetails click
 
-## Data-mangler: 
+## Data-mangler:
 
 * Number på venues
