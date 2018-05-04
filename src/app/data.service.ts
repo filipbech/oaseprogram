@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { map } from 'rxjs/operators/map';
-import { share } from 'rxjs/operators/share';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map,  share } from 'rxjs/operators';
 import { get, set } from 'idb-keyval';
 
 import { IApiResult, IInfoCategory } from './data.model';

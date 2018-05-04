@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { takeUntil } from 'rxjs/operators/takeUntil';
-import { Subject } from 'rxjs/Subject';
+import { takeUntil ,  switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { Observable } from 'rxjs/observable';
-
-import { switchMap } from 'rxjs/operators/switchMap';
 import { ISpeaker, IEvent } from '../data.model';
 import { DataService } from '../data.service';
 

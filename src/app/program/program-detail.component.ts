@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators/switchMap';
-import { takeUntil } from 'rxjs/operators/takeUntil';
-import { Subject } from 'rxjs/Subject';
+import { switchMap,  takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { IEvent } from '../data.model';
 import { DataService } from '../data.service';
 import { clock } from '../icons/clock';

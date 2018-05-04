@@ -1,15 +1,9 @@
 import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { DataService, IEvent, ITrack } from '../data.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { takeUntil } from 'rxjs/operators/takeUntil';
-import { switchMap } from 'rxjs/operators/switchMap';
-import { tap } from 'rxjs/operators/tap';
+import { Observable,  Subject,  BehaviorSubject } from 'rxjs';
+import { takeUntil,  switchMap,  tap, combineLatest, map } from 'rxjs/operators';
 import { arrow } from '../icons/arrow';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { combineLatest } from 'rxjs/operators/combineLatest';
-import { map } from 'rxjs/operators/map';
 
 @Component({
   selector: 'app-program',
