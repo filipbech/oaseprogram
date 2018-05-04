@@ -4,7 +4,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map,  share } from 'rxjs/operators';
 import { get, set } from 'idb-keyval';
 
-import { IApiResult, IInfoCategory } from './data.model';
+import { IApiResult, IInfoCategory, ITrack, IVenue, IProcessedApiResult, IVenueAPIResponse, ISpeaker, IEvent } from './data.model';
+import { PositionService } from './venue/position.service';
 export * from './data.model';
 
 const CACHE_KEY = 'data';
@@ -14,48 +15,29 @@ const ONE_DAY = 86400000; // 24 hours in ms
 const APIURL = '/assets/api/data.json';
 //const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
 
+export const dayNames = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
+
 @Injectable()
 export class DataService {
 
-  private dataSubject = new BehaviorSubject<IApiResult>({
+  private dataSubject = new BehaviorSubject<IProcessedApiResult>({
     speakers: [],
     venues: [],
     tracks: [],
     events: [],
-    infoCategories: [],
-    infoContent: []
+    infoCategories: []
   });
 
-  public tracks$ = this.dataSubject.pipe(map(result => result.tracks), /*share()*/);
-  public venues$ = this.dataSubject.pipe(map(result => result.venues.map(venue => {
-    venue.number = Math.floor(Math.random() * 100);
-    return venue;
-  })), /*share()*/);
-  public speakers$ = this.dataSubject.pipe(map(result => result.speakers), /*share()*/);
-  public events$ = this.dataSubject.pipe(
-    map(result => result.events.sort((eventA, eventB) => eventA.date.start - eventB.date.start).map(event => {
-      const eventTrack = this.dataSubject.getValue().tracks.find(track => track.id === event.tracks[0]);
-      const eventSpeaker = this.dataSubject.getValue().speakers.find(speaker => speaker.id === event.speakers[0]);
-      const eventVenue = this.dataSubject.getValue().venues.find(venue => venue.id === event.venue);
-      return {
-        ...event,
-        trackName: eventTrack ? eventTrack.name : null,
-        speakerName: eventSpeaker ? eventSpeaker.name : null,
-        venueName: eventVenue ? eventVenue.name : null
-      };
-    })),
-    /*share()*/
-  );
-  public infoCategory$ = this.dataSubject.pipe(map(result => {
-    return result.infoCategories.map(category => {
-      category.content = result.infoContent.filter(content => content.category === category.id);
-      return category;
-    });
-  }), /*share()*/);
+  public tracks$: Observable<ITrack[]> = this.dataSubject.pipe(map(result => result.tracks));
+  public venues$: Observable<IVenue[]> = this.dataSubject.pipe(map(result => result.venues));
+  public speakers$: Observable<ISpeaker[]> = this.dataSubject.pipe(map(result => result.speakers));
+  public events$: Observable<IEvent[]> = this.dataSubject.pipe(map(result => result.events));
+  public infoCategory$: Observable<IInfoCategory[]> = this.dataSubject.pipe(map(result => result.infoCategories));
 
   public getVenue(id: number) {
     return this.venues$.pipe(map(venues => venues.find(venue => venue.id === id)));
   }
+
   public getSpeaker(id: number) {
     return this.speakers$.pipe(map(speakers => speakers.find(speaker => speaker.id === id)));
   }
@@ -70,7 +52,7 @@ export class DataService {
 
   public getEventsBySpeaker(speakerId: number) {
     return this.events$.pipe(map(events => events.filter(event => {
-      return event.speakers[0] === speakerId;
+      return event.speakers.indexOf(speakerId) > -1;
     })));
   }
 
@@ -109,17 +91,73 @@ export class DataService {
   public updateData() {
     this.http.get<IApiResult>(APIURL)
       .subscribe(data => {
-        this.dataSubject.next(data);
-        set(CACHE_KEY, data);
+        const infoCategories = data.infoCategories
+          .map(category => {
+            return Object.assign(category, {
+              content: data.infoContent.filter(content => content.category === category.id)
+            });
+          });
+
+        const venues = data.venues
+          .map(venue => {
+            return Object.assign(venue, {
+              position: venue.location ? this.positionService.calculatePctFromLatLng(venue.location.lat, venue.location.lng) : null,
+              number: Math.floor(Math.random() * 100) /** TODO: Replace MOCK WHEN REAL DATA IS AVAILABLE */
+            });
+          });
+
+        const events = data.events
+          .sort((eventA, eventB) => eventA.date.start - eventB.date.start)
+          .map(event => {
+            const trackName = data.tracks
+              .filter(track => event.tracks.indexOf(track.id) > -1)
+              .map(track => track.name)
+              .join(', ');
+
+            const speakersDetails = data.speakers
+              .filter(speaker => event.speakers.indexOf(speaker.id) > -1);
+
+            const speakerName = speakersDetails
+              .map(speaker => speaker.name)
+              .join(', ');
+
+            const venueName = data.venues
+              .find(venue => venue.id === event.venue).name;
+
+            const trackColor = data.tracks
+              .find(track => track.id === event.tracks[0]).color;
+
+            return Object.assign(event, {
+              trackName,
+              speakerName,
+              venueName,
+              trackColor,
+              speakersDetails
+            });
+          });
+
+        const processed: IProcessedApiResult = {
+          infoCategories,
+          venues,
+          events,
+          tracks: data.tracks,
+          speakers: data.speakers
+        };
+
+        this.dataSubject.next(processed as IProcessedApiResult);
+        set(CACHE_KEY, processed);
       });
 
     // Schedule data-update in 15 minutes
     setTimeout(this.updateData.bind(this), 15 * 60 * 1000);
   }
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private positionService: PositionService
+  ) {
     // Use local (idb) version if one exists
-    get(CACHE_KEY).then((data: IApiResult) => {
+    get(CACHE_KEY).then((data: IProcessedApiResult) => {
       if (data) {
         this.dataSubject.next(data);
       }

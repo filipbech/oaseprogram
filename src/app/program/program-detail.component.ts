@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap,  takeUntil } from 'rxjs/operators';
+import { switchMap,  takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IEvent } from '../data.model';
-import { DataService } from '../data.service';
+import { DataService, dayNames } from '../data.service';
 import { clock } from '../icons/clock';
 import { locationPin } from '../icons/location';
 import { user } from '../icons/user';
+
 
 @Component({
   selector: 'app-program-detail',
@@ -18,13 +19,13 @@ import { user } from '../icons/user';
         ${clock}
         {{ event.date.start | date: 'HH:mm' }} - {{ event.date.end | date: 'HH:mm' }} ({{ event.day }})
       </div>
-      <div class="location" *ngIf="event.venue">
+    <div class="location" *ngIf="event.venue">
         ${locationPin}
-        <span *ngIf="event.venueName">{{event.venueName}}</span>
+        <span>{{event.venueName}}</span>
       </div>
-      <div class="speaker" *ngIf="event.speakerName">
+      <div class="speaker" *ngIf="event.speakersDetails.length">
         ${user}
-        <a [routerLink]="['/program', 'speaker', event.speaker]" >{{event.speakerName}}</a>
+        <a *ngFor="let speaker of event.speakersDetails" [routerLink]="['/program', 'speaker', speaker.id]" >{{speaker.name}}</a>
       </div>
       <img [src]="event.imgUrl" *ngIf="event.imgUrl" />
       <div [innerHTML]="event.desc" *ngIf="event.desc"></div>
@@ -34,17 +35,19 @@ import { user } from '../icons/user';
 export class ProgramDetailComponent implements OnInit, OnDestroy {
   event: IEvent;
 
-  dayNames = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
+  dayNames = dayNames;
 
   destroy = new Subject();
 
   ngOnInit() {
     this.activatedRoute.params.pipe(
       takeUntil(this.destroy),
-      switchMap(params => this.dataService.getEvent(parseFloat(params['eventId'])))
+      switchMap(params => this.dataService.getEvent(parseFloat(params['eventId']))),
+      filter(event => !!event)
     ).subscribe(event => {
       if (event && event.date) { event['day'] = this.dayNames[new Date(event.date.start).getDay()]; }
       this.event = event;
+      console.log(event);
     });
   }
 

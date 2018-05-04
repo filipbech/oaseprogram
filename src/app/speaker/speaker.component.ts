@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { takeUntil ,  switchMap } from 'rxjs/operators';
+import { takeUntil ,  switchMap, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs/observable';
 import { ISpeaker, IEvent } from '../data.model';
@@ -31,7 +31,8 @@ export class SpeakerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.activatedRoute.params.pipe(
       takeUntil(this.destroy),
-      switchMap(params => this.dataService.getSpeaker(parseFloat(params['speakerId'])))
+      switchMap(params => this.dataService.getSpeaker(parseFloat(params['speakerId']))),
+      filter(speaker => !!speaker)
     ).subscribe(speaker => {
       this.speaker = speaker;
       this.events = this.dataService.getEventsBySpeaker(speaker.id);

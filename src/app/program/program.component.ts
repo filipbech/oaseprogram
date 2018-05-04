@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { DataService, IEvent, ITrack } from '../data.service';
+import { DataService, IEvent, ITrack, dayNames } from '../data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable,  Subject,  BehaviorSubject } from 'rxjs';
 import { takeUntil,  switchMap,  tap, combineLatest, map } from 'rxjs/operators';
@@ -43,7 +43,7 @@ export class ProgramComponent implements OnDestroy {
   tracks: Observable<ITrack[]> = this.dataService.tracks$;
 
   displayDate: Date;
-  dayNames = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
+  dayNames = dayNames;
 
   nextPreviousLinkInfo = this.activatedRoute.params
     .pipe(

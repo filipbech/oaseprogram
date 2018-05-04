@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { IVenue, IPosition } from '../data.model';
 import { DataService } from '../data.service';
+import { PositionService } from './position.service';
 
 @Component({
   selector: 'app-map',
@@ -46,10 +47,7 @@ export class MapComponent implements OnInit, OnDestroy {
     height: 619
   };
 
-  mapBounds = {
-    latitude: [56.125205, 56.117716],
-    longitude: [10.120664, 10.145729]
-  };
+
 
   venues: Observable<IVenue[]>;
 
@@ -72,41 +70,8 @@ export class MapComponent implements OnInit, OnDestroy {
 
     this.venues = this.dataService.venues$.pipe(map(venues => {
       return venues
-        .filter(venue => !!venue.location)
-        .map(venue => {
-          return Object.assign({}, venue, {
-            position: {
-              ...this.calculatePctFromLatLng(venue.location.lat, venue.location.lng)
-            }
-          });
-        });
+        .filter(venue => !!venue.location);
     }));
-  }
-
-  calculatePctFromLatLng(lat, lng) {
-    let top = 100 * ((lat - this.mapBounds.latitude[0]) / (this.mapBounds.latitude[1] - this.mapBounds.latitude[0]));
-    let left = 100 * ((lng - this.mapBounds.longitude[0]) / (this.mapBounds.longitude[1] - this.mapBounds.longitude[0]));
-    let inView = top > 0 && top < 100 && left > 0 && left < 100;
-
-    // TODO: Remove fake
-    /*FAKE START*/
-    inView = true;
-    if (top < 0) {
-      top = 100 + (top % 100);
-    }
-    if (top > 100) {
-      top = 100 - (top % 100);
-    }
-
-    if (left < 0) {
-      left = 100 + (left % 100);
-    }
-    if (left > 100) {
-      left = 100 - (left % 100);
-    }
-    /** FAKE END */
-
-    return { top, left, inView };
   }
 
   watchLocation() {
@@ -114,7 +79,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   locationUpdate({ timestamp, coords: { accuracy, latitude, longitude } }) {
-    this.me = this.calculatePctFromLatLng(latitude, longitude);
+    this.me = this.positionService.calculatePctFromLatLng(latitude, longitude);
 
     if (this.showBtn) {
       const pixelsFromLeft = (this.mapSize.width * this.me.left / 100) - (this.container.nativeElement.getBoundingClientRect().width / 2);
@@ -131,7 +96,8 @@ export class MapComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private dataService: DataService
+    private dataService: DataService,
+    private positionService: PositionService
   ) {
     this.locationUpdate = this.locationUpdate.bind(this);
   }

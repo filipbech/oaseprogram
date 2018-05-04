@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
 import { DataService } from './data.service';
 
+import { PositionService } from './venue/position.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,8 @@ import { DataService } from './data.service';
     LiveStreamModule
   ],
   providers: [
-    DataService
+    DataService,
+    PositionService
   ],
   bootstrap: [ AppComponent ]
 })

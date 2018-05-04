@@ -1,11 +1,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { clock } from '../icons/clock';
 import { IEvent } from '../data.model';
+import { dayNames } from '../data.service';
 
 @Component({
   selector: 'app-program-line',
   template: `
-    <a [routerLink]="['/program/event', event.id]">
+    <a [routerLink]="['/program/event', event.id]" [style.color]="event.trackColor">
       <div class="time">
         ${clock}
         {{ event.date.start | date: 'HH:mm' }} - {{ event.date.end | date: 'HH:mm' }}
@@ -23,7 +24,7 @@ export class ProgramLineComponent implements OnChanges {
   @Input() event: IEvent;
   @Input() displayDay: Boolean = false;
 
-  dayNames = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
+  dayNames = dayNames;
 
   ngOnChanges() {
     if (this.displayDay) {
