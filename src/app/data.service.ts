@@ -121,8 +121,11 @@ export class DataService {
               .map(speaker => speaker.name)
               .join(', ');
 
-            const venueName = data.venues
+            const venueName = venues
               .find(venue => venue.id === event.venue).name;
+
+            const venueNumber = venues
+              .find(venue => venue.id === event.venue).number;
 
             const trackColor = data.tracks
               .find(track => track.id === event.tracks[0]).color;
@@ -131,6 +134,7 @@ export class DataService {
               trackName,
               speakerName,
               venueName,
+              venueNumber,
               trackColor,
               speakersDetails
             });

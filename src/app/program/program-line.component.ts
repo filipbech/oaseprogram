@@ -16,7 +16,7 @@ import { dayNames } from '../data.service';
       </div>
       <div class="title">{{ event.name }}</div>
       <div class="category">{{ event.speakerName }}</div>
-      <div class="category">{{ event.trackName }}, {{ event.venueName }}</div>
+      <div class="category">{{ event.trackName }}, {{ event.venueName }} <div class="point">{{event.venueNumber}}</div></div>
     </a>
   `
 })

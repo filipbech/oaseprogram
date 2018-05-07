@@ -2,7 +2,7 @@ $purple1: #8c2b76;
 $purple2: #982f80;
 $lightpurple: #f3e9f1;
 $grey: #8b8b8b;
-
+$max-width:500px;
 $navHeight: 50px;
 
 $headlineFont: BreuerText;
@@ -29,36 +29,55 @@ p, img {
 
 h1, h2, h3, h4, h5, header {
   font-family: $headlineFont;
+  font-weight:bold;
   margin: 0 0 8px 0;
+}
+h1 {
+  font-size:28px;
+}
+h2 {
+  font-size:24px;
+}
+h3 {
+  font-size:20px;
 }
 
 app-root {
   height: 100%;
   display:flex;
   flex-direction: column;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 .content {
   overflow:scroll;
   -webkit-overflow-scrolling: smooth;
   flex: 1;
-  padding: 8px;
 }
 
-header {
+header a {
   text-align: center;
+  display:block;
   padding: 5px;
+  // padding-top: max(5px, env(safe-area-inset-top)); /* TODO: ENABLE THIS FOR IPHONE X*/
   font-size: 20px;
   color: #FFF;
   background: linear-gradient($purple1, $purple2);
   text-shadow: 2px 0px 6px rgba(0,0,0,0.2);
   margin: 0;
+  text-decoration: none;
 }
 
-nav {
+footer {
   background: $lightpurple;
   color: $grey;
-  display: flex;
-  justify-content: space-around;
+  nav {
+    max-width: $max-width;
+    margin:0 auto;
+    display: flex;
+    justify-content: space-around;
+  }
   svg {
     width: 24px;
     height: 24px;
@@ -232,6 +251,7 @@ app-accordion {
   display:block;
   margin:0 -8px;
   padding: 4px 8px;
+  font-size:16px;
   .accordion__title {
     margin:0 0 8px;
     padding:0;
@@ -243,6 +263,7 @@ app-accordion {
     text-align: left;
     border:0;
     background:none;
+    font-size:16px;
     svg {
       position:absolute;
       display: inline-block;
@@ -274,3 +295,17 @@ app-accordion {
     }
   }
 }
+
+app-program-detail, app-program, app-speaker, app-map, app-live-stream, app-info {
+  margin:0 auto;
+  max-width:$max-width;
+  display:block;
+  padding: 8px;
+}
+
+app-map {
+  max-width:100%;
+  padding:0;
+}
+
+

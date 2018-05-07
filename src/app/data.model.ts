@@ -59,6 +59,7 @@ export interface IEvent extends IEventAPIResponse {
   speakerName: string;
   speakersDetails: ISpeaker[];
   venueName: string;
+  venueNumber: number;
 }
 
 export interface IDateRange {

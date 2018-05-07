@@ -13,18 +13,26 @@
 }
 
 .point {
-  position:absolute;
-  display:block;
+  display:inline-block;
   width:18px;
   height:18px;
   border-radius: 50%;
-  transform:translate(-50%, -50%);
+  vertical-align: middle;
   background:$purple1;
   color:#fff;
   font-size:10px;
   line-height:15px;
   padding:0;
   text-align: center;
+  box-shadow: 0 0 5px 1px rgba(0,0,0,0.3);
+}
+
+.map .point {
+  transform:translate(-50%, -50%);
+  position:absolute;
+}
+app-program-line .point {
+  transform:scale(0.8);
 }
 
 .locate-me-btn {
@@ -101,3 +109,29 @@
   }
 }
 
+
+
+.detail-popup {
+  position:absolute;
+  top:0;
+  left:0;
+  min-width:100px;
+  padding:5px 7px;
+  min-height:25px;
+  line-height:15px;
+  text-align: center;
+  background:#fff;
+  border-radius: 3px;
+  transform:translate(-50%, -150%);
+  box-shadow: 0 1px 4px 2px rgba(0, 0, 0, 0.3);
+  &:before {
+    content:'';
+    display:block;
+    border:5px solid transparent;
+    border-top-color:#fff;
+    position:absolute;
+    top:100%;
+    left:50%;
+    transform: translate(-50%,0);
+  }
+}

@@ -28,6 +28,14 @@ import { PositionService } from './position.service';
           [style.top]="venue.position.top+'%'"
           [style.left]="venue.position.left+'%'">{{venue.number}}</button>
       </ng-container>
+
+      <div class="detail-popup" #details
+        *ngIf="chosen"
+        [style.top]="chosen.position.top+'%'"
+        [style.left]="chosen.position.left+'%'"
+        >
+        {{chosen.name}}
+      </div>
     </div>
     <button class="locate-me-btn" (click)="watchLocation()" *ngIf="showBtn">Activate map</button>
   </div>
@@ -38,6 +46,8 @@ export class MapComponent implements OnInit, OnDestroy {
   me: Partial<IPosition> = { inView: false };
   @ViewChild('container') container: ElementRef;
 
+  chosen: IVenue;
+
   showBtn = true;
 
   watchId: number;
@@ -47,12 +57,10 @@ export class MapComponent implements OnInit, OnDestroy {
     height: 619
   };
 
-
-
   venues: Observable<IVenue[]>;
 
   onPointClicked(point: IVenue) {
-    alert(point.name);
+    this.chosen = point;
   }
 
   ngOnInit() {

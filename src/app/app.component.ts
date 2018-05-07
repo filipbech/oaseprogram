@@ -12,16 +12,18 @@ import { TrackingService } from './tracking.service';
 @Component({
   selector: 'app-root',
   template: `
-    <header>${conf.title}</header>
+    <header><a routerLink="/">${conf.title}</a></header>
     <div class="content">
       <router-outlet></router-outlet>
     </div>
-    <nav>
-      <a routerLinkActive="active" [routerLink]="['program']">${program} <span>Program</span></a>
-      <a routerLinkActive="active" [routerLink]="['map']">${map} <span>Kort</span></a>
-      <a routerLinkActive="active" [routerLink]="['livestream']">${livestream} <span>Livestream</span></a>
-      <a routerLinkActive="active" [routerLink]="['info']">${info} <span>Hvad er?</span></a>
-    </nav>
+    <footer>
+      <nav class="center">
+        <a routerLinkActive="active" [routerLink]="['program']">${program} <span>Program</span></a>
+        <a routerLinkActive="active" [routerLink]="['map']">${map} <span>Kort</span></a>
+        <a routerLinkActive="active" [routerLink]="['livestream']">${livestream} <span>Livestream</span></a>
+        <a routerLinkActive="active" [routerLink]="['info']">${info} <span>Hvad er?</span></a>
+      </nav>
+    </footer>
   `
 })
 export class AppComponent {
