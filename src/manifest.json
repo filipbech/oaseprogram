@@ -1,0 +1,15 @@
+{
+  "name": "Oaseprogram",
+  "short_name": "Oase",
+  "icons": [
+    {
+      "src": "/assets/icons/app-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#8c2b76"
+}
