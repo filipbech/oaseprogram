@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { takeUntil ,  switchMap, filter } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { Observable } from 'rxjs/observable';
+import { Subject, Observable } from 'rxjs';
 import { ISpeaker, IEvent } from '../data.model';
 import { DataService } from '../data.service';
 

@@ -1,6 +1,7 @@
 # Mangler
 
-* manifest og serviceworker til off-line
+* manifest 
+* serviceworker til off-line
 * Billedskalering
 
 ## Data-mangler
