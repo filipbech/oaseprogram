@@ -47,7 +47,6 @@ export class ProgramDetailComponent implements OnInit, OnDestroy {
     ).subscribe(event => {
       if (event && event.date) { event['day'] = this.dayNames[new Date(event.date.start).getDay()]; }
       this.event = event;
-      console.log(event);
     });
   }
 
