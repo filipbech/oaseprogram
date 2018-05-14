@@ -56,17 +56,19 @@ app-root {
   flex: 1;
 }
 
-header a {
-  text-align: center;
-  display:block;
-  padding: 5px;
-  // padding-top: max(5px, env(safe-area-inset-top)); /* TODO: ENABLE THIS FOR IPHONE X*/
-  font-size: 20px;
-  color: #FFF;
+header {
+  padding-top: env(safe-area-inset-top);
   background: linear-gradient($purple1, $purple2);
-  text-shadow: 2px 0px 6px rgba(0,0,0,0.2);
-  margin: 0;
-  text-decoration: none;
+  a {
+    text-align: center;
+    display:block;
+    padding: 5px;
+    font-size: 20px;
+    color: #FFF;
+    text-shadow: 2px 0px 6px rgba(0,0,0,0.2);
+    margin: 0;
+    text-decoration: none;
+  }
 }
 
 footer {
