@@ -59,6 +59,7 @@ app-root {
 header {
   padding-top: env(safe-area-inset-top);
   background: linear-gradient($purple1, $purple2);
+  margin-bottom:0;
   a {
     text-align: center;
     display:block;
@@ -189,6 +190,9 @@ app-live-stream {
     padding-top: 56.25%;
     display: block;
     position: relative;
+    background:url('https://i.ytimg.com/vi/J6lU_x0GT_c/maxresdefault_live.jpg');
+    background-size:cover;
+    background-position:center center;
     iframe {
       position:absolute;
       top:0;
@@ -303,11 +307,15 @@ app-program-detail, app-program, app-speaker, app-map, app-live-stream, app-info
   max-width:$max-width;
   display:block;
   padding: 8px;
+  min-height:100%;
+  box-shadow:0 0 3px rgba(0,0,0,0.3);
 }
 
 app-map {
   max-width:100%;
+  margin:0 auto;
   padding:0;
+  text-align: center;
 }
 
 

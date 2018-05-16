@@ -1,7 +1,9 @@
 .map-container {
-  width:100%;
+  max-width:100%;
   overflow:scroll;
+  display:inline-block;
   position:relative;
+  margin:0 auto;
 }
 
 .map {
