@@ -11,6 +11,7 @@
 ## Data-mangler
 
 * Number på venues (bo)
+* dublicates
 * rigtige mapBounds (benjamin)
 
 ## UX ting
