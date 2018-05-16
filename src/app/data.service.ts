@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map,  share } from 'rxjs/operators';
 import { get, set } from 'idb-keyval';
 
-import { IApiResult, IInfoCategory, ITrack, IVenue, IProcessedApiResult, IVenueAPIResponse, ISpeaker, IEvent } from './data.model';
+import { IApiResult, IInfoCategory, IVenue, IProcessedApiResult, IVenueAPIResponse, ISpeaker, IEvent, ITrackCategory } from './data.model';
 import { PositionService } from './venue/position.service';
 export * from './data.model';
 
@@ -13,7 +13,7 @@ const CACHE_KEY = 'data';
 const ONE_DAY = 86400000; // 24 hours in ms
 
 const APIURL = '/assets/api/data.json';
-//const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
+// const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
 
 export const dayNames = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
 
@@ -28,7 +28,9 @@ export class DataService {
     infoCategories: []
   });
 
-  public tracks$: Observable<ITrack[]> = this.dataSubject.pipe(map(result => result.tracks));
+  public allImages: Set<string>;
+
+  public tracks$: Observable<ITrackCategory[]> = this.dataSubject.pipe(map(result => result.tracks));
   public venues$: Observable<IVenue[]> = this.dataSubject.pipe(map(result => result.venues));
   public speakers$: Observable<ISpeaker[]> = this.dataSubject.pipe(map(result => result.speakers));
   public events$: Observable<IEvent[]> = this.dataSubject.pipe(map(result => result.events));
@@ -91,6 +93,9 @@ export class DataService {
   public updateData() {
     this.http.get<IApiResult>(APIURL)
       .subscribe(data => {
+
+        this.allImages = new Set();
+
         const infoCategories = data.infoCategories
           .map(category => {
             return Object.assign(category, {
@@ -140,11 +145,37 @@ export class DataService {
             });
           });
 
+        const tracks = data.tracks
+          .sort((a, b) => a.type > b.type ? 1 : -1)
+          .reduce((acc, track) => {
+            let currentTrackCategory = acc.find(trackCategory => trackCategory.type === track.type);
+            if (!currentTrackCategory) {
+              acc.push({ type: track.type, tracks: [] });
+              currentTrackCategory = acc[acc.length - 1];
+            }
+            currentTrackCategory.tracks.push(track);
+            return acc;
+          }, []);
+
+        // Find all the images - in events
+        events.forEach(event => {
+          if (event.imgUrl) {
+            this.allImages.add(event.imgUrl);
+          }
+        });
+
+        // Find all the images - in speakers
+        data.speakers.forEach(speaker => {
+          if (speaker.imgUrl) {
+            this.allImages.add(speaker.imgUrl);
+          }
+        });
+
         const processed: IProcessedApiResult = {
           infoCategories,
           venues,
           events,
-          tracks: data.tracks,
+          tracks: tracks,
           speakers: data.speakers
         };
 

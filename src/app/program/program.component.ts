@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { DataService, IEvent, ITrack, dayNames } from '../data.service';
+import { DataService, IEvent, ITrack, dayNames, ITrackCategory } from '../data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable,  Subject,  BehaviorSubject } from 'rxjs';
 import { takeUntil,  switchMap,  tap, combineLatest, map } from 'rxjs/operators';
@@ -21,7 +21,9 @@ import { arrow } from '../icons/arrow';
   <label>Viser:
     <select (change)="onChange($event.target.value)" #select>
       <option value="">Alle spor</option>
-      <option *ngFor="let track of tracks | async" [value]="track.id">{{ track.name }}</option>
+      <optgroup *ngFor="let trackCategory of tracks | async" [label]="trackCategory.type">
+        <option *ngFor="let track of trackCategory.tracks" [value]="track.id">{{ track.name }}</option>
+      <optgroup>
     </select>
   </label>
 
@@ -40,7 +42,7 @@ export class ProgramComponent implements OnDestroy {
 
   destroy = new Subject();
 
-  tracks: Observable<ITrack[]> = this.dataService.tracks$;
+  tracks: Observable<ITrackCategory[]> = this.dataService.tracks$;
 
   displayDate: Date;
   dayNames = dayNames;

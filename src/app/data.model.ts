@@ -35,7 +35,7 @@ export interface ITrackAPIResponse {
   desc: string; /* take this out? */
   type: string;
   color: string;
-  imgUrl: string;
+  imgUrl: string; /* take this out? */
 }
 export interface ITrack extends ITrackAPIResponse { }
 
@@ -94,10 +94,14 @@ export interface IApiResult {
   infoContent: IInfoContentAPIResponse[];
 }
 
+export interface ITrackCategory {
+  type: string;
+  tracks: ITrack[];
+}
 export interface IProcessedApiResult {
   speakers: ISpeaker[];
   venues: IVenue[];
-  tracks: ITrack[];
+  tracks: ITrackCategory[];
   events: IEvent[];
   infoCategories: IInfoCategory[];
 }

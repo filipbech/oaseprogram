@@ -1,7 +1,7 @@
 # Mangler
 
 * offline resourcer (?homescreen flag)
-* Billedskalering
+* Billedskalering (node - Bo PR)
 * live-video poster
 * desktop - shadow på content
 * detaljeview layout
@@ -23,7 +23,7 @@
 
 ## måske
 
-* fjerne ubrugt data for at gøre fil-størrelsen mindre
+* fjerne ubrugt data for at gøre fil-størrelsen mindre (node - bo PR)
 
 ## Senere (v2)
 
