@@ -9,7 +9,8 @@ const FILES = [
   '/polyfills.js',
   '/runtime.js',
   '/styles.css',
-  '/assets/map.jpg'
+  '/assets/map.jpg',
+  'https://i.ytimg.com/vi/J6lU_x0GT_c/maxresdefault_live.jpg'
 ];
 
 self.addEventListener('install', event => {

@@ -1,9 +1,7 @@
 # Mangler
 
-* offline resourcer (?homescreen flag)
+* offline resourcer (gem ved ?homescreen flag)
 * Billedskalering (node - Bo PR)
-* live-video poster
-* desktop - shadow på content
 * detaljeview layout
 * ved ingen event-billede brug taler-billede
 * link til kort fra location i detaljeview
@@ -17,7 +15,6 @@
 
 ## UX ting
 
-* for mange tracks? (kategorier af spor - kun dem med content?) 
 * tilbageknap iOS 
 * "activate map" - gem tilladdelse-boolean lokalt 
 
