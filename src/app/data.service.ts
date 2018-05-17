@@ -28,7 +28,7 @@ export class DataService {
     infoCategories: []
   });
 
-  public allImages: Set<string>;
+  public allImages: Set<string> = new Set();
 
   public tracks$: Observable<ITrackCategory[]> = this.dataSubject.pipe(map(result => result.tracks));
   public venues$: Observable<IVenue[]> = this.dataSubject.pipe(map(result => result.venues));
@@ -134,6 +134,19 @@ export class DataService {
 
             const trackColor = data.tracks
               .find(track => track.id === event.tracks[0]).color;
+
+            if (!event.imgUrl) {
+              const firstEventSpeaker = data.speakers.find(speaker => speaker.id === event.speakers[0]);
+              if (firstEventSpeaker && firstEventSpeaker.imgUrl) {
+                event.imgUrl = firstEventSpeaker.imgUrl;
+              } else {
+                const firstEventTrack = data.tracks.find(track => track.id === event.tracks[0]);
+                if (firstEventTrack && firstEventTrack.imgUrl) {
+                  event.imgUrl = firstEventTrack.imgUrl;
+                }
+              }
+            }
+             const imgUrl = event.imgUrl ? event.imgUrl : data.speakers.find(speaker => speaker.id === event.speakers[0]).imgUrl;
 
             return Object.assign(event, {
               trackName,

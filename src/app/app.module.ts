@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
 import { DataService } from './data.service';
 import { OfflineService } from './offline.service';
-
 import { PositionService } from './venue/position.service';
 import { TrackingService } from './tracking.service';
 

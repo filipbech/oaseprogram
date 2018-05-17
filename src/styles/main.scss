@@ -60,15 +60,37 @@ header {
   padding-top: env(safe-area-inset-top);
   background: linear-gradient($purple1, $purple2);
   margin-bottom:0;
+  text-align: center;
   a {
-    text-align: center;
-    display:block;
-    padding: 5px;
+    display:inline-block;
+    padding: 5px 10px;
     font-size: 20px;
     color: #FFF;
     text-shadow: 2px 0px 6px rgba(0,0,0,0.2);
     margin: 0;
     text-decoration: none;
+  }
+  .center {
+    position:relative;
+    max-width: $max-width;
+    margin: 0 auto;
+  }
+  .backBtn {
+    position:absolute;
+    left:3px;
+    top:5px;
+    border:0;
+    background:none;
+    svg {
+      transform:rotate(180deg);
+      display:inline-block;
+      width:15px;
+      height:24px;
+      line-height:20px;
+      polygon {
+        fill: #fff;
+      }
+    }
   }
 }
 
@@ -203,7 +225,7 @@ app-live-stream {
   }
 }
 
-app-program-detail {
+app-program-detail, app-speaker {
   img {
     max-width: 100%;
   }

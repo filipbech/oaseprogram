@@ -1,9 +1,8 @@
 # Mangler
 
-* offline resourcer (gem ved ?homescreen flag)
+* offline resourcer (gem ved ?homescreen flag) - TEST
 * Billedskalering (node - Bo PR)
 * detaljeview layout
-* ved ingen event-billede brug taler-billede
 * link til kort fra location i detaljeview
 * click på spor i detaljeview går til filtrering (idag)
 * rigtig data
@@ -16,7 +15,6 @@
 
 ## UX ting
 
-* tilbageknap iOS 
 * "activate map" - gem tilladdelse-boolean lokalt 
 
 ## måske

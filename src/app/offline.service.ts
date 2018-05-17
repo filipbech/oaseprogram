@@ -3,20 +3,14 @@ import { get, set } from 'idb-keyval';
 export class OfflineService {
   stored: boolean;
 
-  startDownload(list: string[]) {
-    if ('serviceWorker' in navigator) {
-
+  startDownload(list: string[] = []) {
+    if ('serviceWorker' in navigator && list.length) {
       this.instructServiceWorker({ type: 'download', list })
-        .then(this.downloadCompleted.bind(this))
-        .catch(err => {
-          console.log('error', err);
+        .then(success => {
+          this.stored = true;
+          set('stored', this.stored);
         });
     }
-  }
-
-  downloadCompleted(event) {
-    this.stored = true;
-    set('stored', this.stored);
   }
 
   constructor() {
@@ -25,7 +19,7 @@ export class OfflineService {
     });
   }
 
-  public instructServiceWorker(message) {
+  private instructServiceWorker(message) {
     return new Promise(function (resolve, reject) {
 
       const messageChannel = new MessageChannel();

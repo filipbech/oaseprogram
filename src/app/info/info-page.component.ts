@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
     <app-accordion *ngFor="let category of info | async">
       <div accordion-title>{{category.name}}</div>
       <div accordion-content>
-        <div [innerHTML]="category.desc"></div>
+        <div [innerHTML]="category.desc | safe"></div>
         <app-accordion *ngFor="let content of category.content">
           <div accordion-title>{{content.header}}</div>
           <div accordion-content>
-            <div [innerHTML]="content.content"></div>
+            <div [innerHTML]="content.content | safe"></div>
           </div>
         </app-accordion>
       </div>
