@@ -1,25 +1,23 @@
 # Mangler
 
 * offline resourcer (gem ved ?homescreen flag) - TEST
-* Billedskalering (node - Bo PR)
 * detaljeview layout
 * link til kort fra location i detaljeview
 * click på spor i detaljeview går til filtrering (idag)
-* rigtig data
+* "activate map" - gem tilladdelse-boolean lokalt 
 
 ## Data-mangler
 
 * Number på venues (bo)
-* dublicates
+* dublicates skal fixes
+* live-data skal bruges når det er klar...
 * rigtige mapBounds (benjamin)
 
-## UX ting
+## Data PR
 
-* "activate map" - gem tilladdelse-boolean lokalt 
+* fjerne ubrugt data for at gøre fil-størrelsen mindre
+* Rigtige billedskalering
 
-## måske
-
-* fjerne ubrugt data for at gøre fil-størrelsen mindre (node - bo PR)
 
 ## Senere (v2)
 
