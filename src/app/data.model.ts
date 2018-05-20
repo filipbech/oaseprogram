@@ -55,6 +55,7 @@ export interface IEventAPIResponse {
 
 export interface IEvent extends IEventAPIResponse {
   trackName: string;
+  trackDetails: ITrack[];
   trackColor: string;
   speakerName: string;
   speakersDetails: ISpeaker[];

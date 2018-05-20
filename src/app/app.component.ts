@@ -47,10 +47,14 @@ export class AppComponent {
     private offlineService: OfflineService
   ) {
 
+    console.log('app-component');
     // check to see if launched from homescreen!
-    if (!this.offlineService.stored && (location.search === '?homescreen' || window.matchMedia('(min-width:800px)').matches)) {
-      this.offlineService.startDownload(Array.from(this.dataService.allImages));
+    setTimeout(_ => {
+      if (!this.offlineService.stored && (location.search === '?homescreen' || window.matchMedia('(min-width:800px)').matches)) {
+        console.log('start downloading?');
+        this.offlineService.startDownload(Array.from(this.dataService.allImages));
     }
+    }, 1000);
 
     // if (location.search === '?homescreen') {
     //   // restore last current url from state on iOS (if not too old)

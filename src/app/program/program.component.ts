@@ -1,8 +1,8 @@
-import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { DataService, IEvent, ITrack, dayNames, ITrackCategory } from '../data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable,  Subject,  BehaviorSubject } from 'rxjs';
-import { takeUntil,  switchMap,  tap, combineLatest, map } from 'rxjs/operators';
+import { takeUntil,  switchMap,  tap, combineLatest, map, take, filter } from 'rxjs/operators';
 import { arrow } from '../icons/arrow';
 
 @Component({
@@ -36,13 +36,13 @@ import { arrow } from '../icons/arrow';
   </div>
   `
 })
-export class ProgramComponent implements OnDestroy {
+export class ProgramComponent implements OnDestroy, OnInit {
 
   @ViewChild('select') select: ElementRef;
 
   destroy = new Subject();
 
-  tracks: Observable<ITrackCategory[]> = this.dataService.tracks$;
+  tracks: Observable<ITrackCategory[]> = this.dataService.tracks$.pipe(filter(trackList => !!trackList.length))
 
   displayDate: Date;
   dayNames = dayNames;
@@ -63,10 +63,26 @@ export class ProgramComponent implements OnDestroy {
       }),
       switchMap(params => this.dataService.getEventsByDate(params['date'])),
       combineLatest(this.filterSubject.asObservable()),
-      map(([events, filter]) => {
-        return events.filter((event: IEvent) => filter ? event.tracks[0] === filter : true);
+      map(([events, selectedTrack]) => {
+        return events.filter((event: IEvent) => selectedTrack ? event.tracks.indexOf(selectedTrack) > -1 : true);
       })
     );
+
+  ngOnInit() {
+    this.activatedRoute.queryParams.pipe(
+      map(queryparams => queryparams.track),
+      takeUntil(this.destroy),
+      combineLatest(this.tracks)
+    )
+    .subscribe(([initialTrack, _unused]) => {
+      this.onChange(initialTrack);
+      setTimeout(_ => {
+        if (initialTrack) {
+          this.select.nativeElement.value = initialTrack;
+        }
+      }, 0);
+    });
+  }
 
   onChange(value) {
     if (value === 'reset') {

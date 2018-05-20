@@ -14,7 +14,11 @@ import { user } from '../icons/user';
   template: `
     <div *ngIf="event">
       <h3>{{ event.name }}</h3>
-      <div class="track" *ngIf="event.trackName">{{event.trackName}}</div>
+      <div class="track" *ngIf="event.trackName">
+        <ng-container *ngFor="let track of event.trackDetails; let isLast=last">
+          <a [routerLink]="['/program']" [queryParams]="{track: track.id}">{{track.name}}</a>{{isLast ? '' : ', '}}
+        </ng-container>
+      </div>
       <div class="time">
         ${clock}
         {{ event.date.start | date: 'HH:mm' }} - {{ event.date.end | date: 'HH:mm' }} ({{ event.day }})

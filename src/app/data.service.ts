@@ -119,6 +119,8 @@ export class DataService {
               .map(track => track.name)
               .join(', ');
 
+            const trackDetails = data.tracks.filter(track => event.tracks.indexOf(track.id) > -1);
+
             const speakersDetails = data.speakers
               .filter(speaker => event.speakers.indexOf(speaker.id) > -1);
 
@@ -154,7 +156,8 @@ export class DataService {
               venueName,
               venueNumber,
               trackColor,
-              speakersDetails
+              speakersDetails,
+              trackDetails
             });
           });
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, combineLatest } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -15,20 +15,26 @@ export class ProgramRedirectComponent implements OnInit, OnDestroy {
     const today = new Date();
     const todayTime = today.getTime();
 
+
     this.dataService.getFirstLastEventStart()
-      .pipe(takeUntil(this.destroy))
-      .subscribe(firstLast => {
+      .pipe(
+        combineLatest(this.activatedRoute.queryParams),
+        takeUntil(this.destroy),
+      )
+      .subscribe(([firstLast, queryParams]) => {
         if (!firstLast.first) {
           return;
         }
         if (todayTime > firstLast.first) {
           if (todayTime < firstLast.last) {
-            this.router.navigate(['program', this.dataService.toDateString(today)]);
+            this.router.navigate(['program', this.dataService.toDateString(today)], { queryParams, skipLocationChange: true });
             return;
           }
-          this.router.navigate(['program', this.dataService.toDateString(new Date(firstLast.last))]);
+          this.router.navigate(['program', this.dataService.toDateString(new Date(firstLast.last))],
+            { queryParams, skipLocationChange: true });
         } else {
-          this.router.navigate(['program', this.dataService.toDateString(new Date(firstLast.first))]);
+          this.router.navigate(['program', this.dataService.toDateString(new Date(firstLast.first))],
+            { queryParams, skipLocationChange: true  });
         }
       });
   }
@@ -40,6 +46,7 @@ export class ProgramRedirectComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private dataService: DataService
+    private dataService: DataService,
+    private activatedRoute: ActivatedRoute
   ) {}
 }

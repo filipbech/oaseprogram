@@ -1,12 +1,15 @@
 import { get, set } from 'idb-keyval';
+import { NgZone } from '@angular/core';
 
 export class OfflineService {
   stored: boolean;
 
   startDownload(list: string[] = []) {
+    console.log('startdownload', list);
     if ('serviceWorker' in navigator && list.length) {
       this.instructServiceWorker({ type: 'download', list })
         .then(success => {
+          console.log('succes back in service');
           this.stored = true;
           set('stored', this.stored);
         });
@@ -20,17 +23,19 @@ export class OfflineService {
   }
 
   private instructServiceWorker(message) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
 
       const messageChannel = new MessageChannel();
-      messageChannel.port1.onmessage = function (event) {
+      messageChannel.port1.onmessage = event => {
         if (event.data.error) {
           reject(event.data.error);
         } else {
           resolve(event.data);
         }
       };
-      (navigator as any).serviceWorker.controller.postMessage(message, [messageChannel.port2]);
+      setTimeout(_ => {
+        (navigator as any).serviceWorker.controller.postMessage(message, [messageChannel.port2]);
+      }, 1000);
     });
   }
 
