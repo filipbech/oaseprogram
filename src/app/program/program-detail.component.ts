@@ -25,7 +25,10 @@ import { user } from '../icons/user';
       </div>
     <div class="location" *ngIf="event.venue">
         ${locationPin}
-        <span> {{event.venueName}} <div class="point">{{event.venueNumber}}</div></span>
+        <a [routerLink]="['/map']" [queryParams]="{venue:event.venue}">
+          {{event.venueName}}
+          <div class="point">{{event.venueNumber}}</div>
+        </a>
       </div>
       <div class="speaker" *ngIf="event.speakersDetails.length">
         ${user}

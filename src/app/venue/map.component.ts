@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { map, take, switchMap, combineLatest } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { IVenue, IPosition } from '../data.model';
 import { DataService } from '../data.service';
 import { PositionService } from './position.service';
@@ -57,7 +57,9 @@ export class MapComponent implements OnInit, OnDestroy {
     height: 619
   };
 
-  venues: Observable<IVenue[]>;
+  venues: Observable<IVenue[]> = this.dataService.venues$.pipe(map(venues => venues
+      .filter(venue => !!venue.location)
+  ));
 
   onPointClicked(point: IVenue) {
     this.chosen = point;
@@ -76,10 +78,18 @@ export class MapComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.venues = this.dataService.venues$.pipe(map(venues => {
-      return venues
-        .filter(venue => !!venue.location);
-    }));
+    this.activatedRoute.queryParams.pipe(
+      take(1),
+      combineLatest(this.venues),
+      map(([queryParams, venueList]) => venueList.find(venue => venue.id === +queryParams.venue))
+    )
+      .subscribe(point => {
+        console.log('startingpoint', point);
+        if (point) {
+          this.onPointClicked(point);
+        }
+      });
+
   }
 
   watchLocation() {
@@ -105,7 +115,8 @@ export class MapComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private dataService: DataService,
-    private positionService: PositionService
+    private positionService: PositionService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.locationUpdate = this.locationUpdate.bind(this);
   }
