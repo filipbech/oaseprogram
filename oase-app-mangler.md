@@ -1,17 +1,15 @@
 # Mangler
 
-* offline resourcer (gem ved ?homescreen flag) - TEST
+* offline resourcer (gem ved ?homescreen flag)
 * detaljeview layout
-* link til kort fra location i detaljeview
-* click på spor i detaljeview går til filtrering (idag)
-* "activate map" - gem tilladdelse-boolean lokalt 
+* "activate map" - gem tilladdelse-boolean lokalt
+* live-data - når Bo er klar! 
 
 ## Data-mangler
 
 * Number på venues (bo)
-* dublicates skal fixes
-* live-data skal bruges når det er klar...
-* rigtige mapBounds (benjamin)
+* dublicates skal fixes (bo)
+* rigtige mapBounds + kort-fil (benjamin)
 
 ## Data PR
 
