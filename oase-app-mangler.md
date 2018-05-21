@@ -4,6 +4,7 @@
 * detaljeview layout
 * "activate map" - gem tilladdelse-boolean lokalt
 * live-data - når Bo er klar! 
+* sentry.io
 
 ## Data-mangler
 
@@ -19,7 +20,7 @@
 
 ## Senere (v2)
 
-* dataupdate i worker
+* dataupdate i worker - eller til serveren
 * theming
 * mere opdaterings-venlig
 * resume på iOS
