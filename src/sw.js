@@ -8,8 +8,8 @@ const FILES = [
   '/main.js',
   '/polyfills.js',
   '/runtime.js',
-  '/styles.js',
-  // '/styles.css',
+  //'/styles.js',
+  '/styles.css',
   '/assets/map.jpg',
   '/breuertextwebltd-bold.woff',
   '/breuertextwebltd-regular.woff',
@@ -22,7 +22,6 @@ self.addEventListener('install', event => {
     caches.open(APP_CACHE_NAME)
       .then(cache => cache.addAll(FILES)
           .then(() => {
-            console.log('installed and cached');
             return self.skipWaiting()
           })
       )
@@ -30,14 +29,12 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  console.log('starting delete-cache');
   // Delete non-matching caches that has the prefix
   event.waitUntil(Promise.all([
     caches.keys().then(keys => Promise.all(
         keys
           .filter(key => key != APP_CACHE_NAME && key.startsWith(`${PREFIX}-app-`))
           .map(key => {
-            console.log('deleting cache', key);
             return caches.delete(key)
           })
       )
@@ -59,17 +56,13 @@ self.addEventListener('fetch', event => {
 });
 
 self.addEventListener('message', event => {
-  console.log('in sw: message', event);
   if (event.data.type == 'download') {
-    console.log('all images download started')
     downloadFiles(event.data.list)
       .then(() => {
-        console.log('all images download ended')
         event.ports[0].postMessage({
           success: true
         });
       }).catch(err => {
-        console.log('imagedownloads failed');
         event.ports[0].postMessage({
           error: err
         });
@@ -78,6 +71,11 @@ self.addEventListener('message', event => {
 
 });
 
+//gracefull downloading (always resolves the promise - just logs errors)
 const downloadFiles = list => caches
   .open(STATIC_CACHE_NAME)
-  .then(cache => cache.addAll(list));
+  .then(cache => Promise.all(list.map(url => cache.add(url)
+    .catch(err => {
+      console.log(url+' failed', err);
+    })
+  )));

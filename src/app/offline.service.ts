@@ -5,14 +5,16 @@ export class OfflineService {
   stored: boolean;
 
   startDownload(list: string[] = []) {
-    console.log('startdownload', list);
     if ('serviceWorker' in navigator && list.length) {
       this.instructServiceWorker({ type: 'download', list })
         .then(success => {
-          console.log('succes back in service');
           this.stored = true;
           set('stored', this.stored);
-        });
+          alert('Alle resourcer er nu cachet, og du kan nu fortsætte brugen uden forbindelse.');
+        })
+        .catch(err => {
+          // silent catch
+        })
     }
   }
 
@@ -35,7 +37,7 @@ export class OfflineService {
       };
       setTimeout(_ => {
         (navigator as any).serviceWorker.controller.postMessage(message, [messageChannel.port2]);
-      }, 1000);
+      }, 500);
     });
   }
 
