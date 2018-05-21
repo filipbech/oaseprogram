@@ -2,7 +2,7 @@ import { Component, OnDestroy, ViewChild, ElementRef, OnInit } from '@angular/co
 import { DataService, IEvent, ITrack, dayNames, ITrackCategory } from '../data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable,  Subject,  BehaviorSubject } from 'rxjs';
-import { takeUntil,  switchMap,  tap, combineLatest, map, take, filter } from 'rxjs/operators';
+import { takeUntil,  switchMap,  tap, combineLatest, map, take, filter, share } from 'rxjs/operators';
 import { arrow } from '../icons/arrow';
 
 @Component({
@@ -20,7 +20,7 @@ import { arrow } from '../icons/arrow';
 
   <label>Viser:
     <select (change)="onChange($event.target.value)" #select>
-      <option value="">Alle spor</option>
+      <option value="0">Alle spor</option>
       <optgroup *ngFor="let trackCategory of tracks | async" [label]="trackCategory.type">
         <option *ngFor="let track of trackCategory.tracks" [value]="track.id">{{ track.name }}</option>
       <optgroup>
@@ -62,10 +62,11 @@ export class ProgramComponent implements OnDestroy, OnInit {
         this.displayDate = new Date(params['date']);
       }),
       switchMap(params => this.dataService.getEventsByDate(params['date'])),
-      combineLatest(this.filterSubject.asObservable()),
+      combineLatest(this.filterSubject),
       map(([events, selectedTrack]) => {
         return events.filter((event: IEvent) => selectedTrack ? event.tracks.indexOf(selectedTrack) > -1 : true);
-      })
+      }),
+      share()
     );
 
   ngOnInit() {
@@ -75,9 +76,9 @@ export class ProgramComponent implements OnDestroy, OnInit {
       combineLatest(this.tracks)
     )
     .subscribe(([initialTrack, _unused]) => {
-      this.onChange(initialTrack);
       setTimeout(_ => {
         if (initialTrack) {
+          this.onChange(initialTrack);
           this.select.nativeElement.value = initialTrack;
         }
       }, 0);
@@ -87,7 +88,7 @@ export class ProgramComponent implements OnDestroy, OnInit {
   onChange(value) {
     if (value === 'reset') {
       // set by remove-filter Button
-      value = '';
+      value = 0;
       this.select.nativeElement.value = value;
     }
     this.filterSubject.next(parseFloat(value));

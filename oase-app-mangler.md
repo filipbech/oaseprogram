@@ -1,10 +1,8 @@
 # Mangler
 
-* offline resourcer (gem ved ?homescreen flag)
 * detaljeview layout
 * "activate map" - gem tilladdelse-boolean lokalt
-* live-data - når Bo er klar! 
-* sentry.io
+* live-data - når Bo er klar!
 
 ## Data-mangler
 

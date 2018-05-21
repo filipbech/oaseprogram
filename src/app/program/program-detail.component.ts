@@ -6,6 +6,7 @@ import { IEvent } from '../data.model';
 import { DataService, dayNames } from '../data.service';
 import { clock } from '../icons/clock';
 import { locationPin } from '../icons/location';
+import { category } from '../icons/category';
 import { user } from '../icons/user';
 
 
@@ -15,6 +16,7 @@ import { user } from '../icons/user';
     <div *ngIf="event">
       <h3>{{ event.name }}</h3>
       <div class="track" *ngIf="event.trackName">
+        ${category}
         <ng-container *ngFor="let track of event.trackDetails; let isLast=last">
           <a [routerLink]="['/program']" [queryParams]="{track: track.id}">{{track.name}}</a>{{isLast ? '' : ', '}}
         </ng-container>
@@ -25,10 +27,8 @@ import { user } from '../icons/user';
       </div>
     <div class="location" *ngIf="event.venue">
         ${locationPin}
-        <a [routerLink]="['/map']" [queryParams]="{venue:event.venue}">
-          {{event.venueName}}
-          <div class="point">{{event.venueNumber}}</div>
-        </a>
+        <a [routerLink]="['/map']" [queryParams]="{venue:event.venue}">{{event.venueName}}</a>
+        <div class="point">{{event.venueNumber}}</div>
       </div>
       <div class="speaker" *ngIf="event.speakersDetails.length">
         ${user}

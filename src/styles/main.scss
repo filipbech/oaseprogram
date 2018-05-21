@@ -52,7 +52,7 @@ app-root {
 }
 .content {
   overflow:scroll;
-  -webkit-overflow-scrolling: smooth;
+  -webkit-overflow-scrolling: touch;
   flex: 1;
 }
 
@@ -196,8 +196,11 @@ app-program-line {
   }
 }
 
-.time, .location, .speaker {
-    svg {
+.time, .location, .speaker, .track {
+  a {
+    color: #000;
+  }
+  svg {
     width:10px;
     height:10px;
     display:inline-block;

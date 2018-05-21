@@ -8,9 +8,7 @@ if (environment.production) {
   enableProdMode();
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(reg => {
-      console.log('ServiceWorker was added!');
-    });
+    navigator.serviceWorker.register('/sw.js');
   }
 }
 
