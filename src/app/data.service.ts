@@ -12,8 +12,7 @@ const CACHE_KEY = 'data';
 
 const ONE_DAY = 86400000; // 24 hours in ms
 
-const APIURL = '/assets/api/data.json';
-// const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
+const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
 
 export const dayNames = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
 
@@ -106,8 +105,7 @@ export class DataService {
         const venues = data.venues
           .map(venue => {
             return Object.assign(venue, {
-              position: venue.location ? this.positionService.calculatePctFromLatLng(venue.location.lat, venue.location.lng) : null,
-              number: Math.floor(Math.random() * 100) /** TODO: Replace MOCK WHEN REAL DATA IS AVAILABLE */
+              position: venue.location ? this.positionService.calculatePctFromLatLng(venue.location.lat, venue.location.lng) : null
             });
           });
 
@@ -132,7 +130,7 @@ export class DataService {
               .find(venue => venue.id === event.venue).name;
 
             const venueNumber = venues
-              .find(venue => venue.id === event.venue).number;
+              .find(venue => venue.id === event.venue).mapNumber;
 
             const trackColor = data.tracks
               .find(track => track.id === event.tracks[0]).color;

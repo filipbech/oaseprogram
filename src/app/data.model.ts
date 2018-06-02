@@ -11,11 +11,11 @@ export interface IVenueAPIResponse {
   name: string;
   location: ICoordinateSet;
   type: string;
+  mapNumber: number;
 }
 
 export interface IVenue extends IVenueAPIResponse {
   position: IPosition;
-  number: number; /** THIS SHOULD BE PART OF RESPONSE */
 }
 
 export interface IPosition {

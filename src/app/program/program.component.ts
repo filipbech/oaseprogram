@@ -29,7 +29,7 @@ import { arrow } from '../icons/arrow';
 
   <div class="app-program-block">
     <app-program-line *ngFor="let event of events | async" [event]="event"></app-program-line>
-    <div *ngIf="(events | async)?.length < 1" class="no-events">
+    <div *ngIf="!hasEvents" class="no-events">
       Ingen programpunkter matcher dine valg.<br/>
       <button (click)="onChange('reset')">Vis alle</button>
     </div>
@@ -39,6 +39,8 @@ import { arrow } from '../icons/arrow';
 export class ProgramComponent implements OnDestroy, OnInit {
 
   @ViewChild('select') select: ElementRef;
+
+  hasEvents = true;
 
   destroy = new Subject();
 
@@ -66,7 +68,9 @@ export class ProgramComponent implements OnDestroy, OnInit {
       map(([events, selectedTrack]) => {
         return events.filter((event: IEvent) => selectedTrack ? event.tracks.indexOf(selectedTrack) > -1 : true);
       }),
-      share()
+      tap(events => {
+        this.hasEvents = !!events.length;
+      })
     );
 
   ngOnInit() {

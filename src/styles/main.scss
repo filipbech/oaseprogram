@@ -205,6 +205,7 @@ app-program-line {
     height:10px;
     display:inline-block;
     vertical-align: middle;
+    margin-right:3px;
   }
 }
 
@@ -230,15 +231,21 @@ app-live-stream {
 
 app-program-detail, app-speaker {
   img {
-    max-width: 100%;
+    width: 50%;
+    float:left;
+    margin:0 10px 10px 0;
   }
 }
 
-
-
+.detail-description {
+  margin-top:10px;
+}
 
 @import "map";
 
+.location .point {
+  transform: translate(4px, -1px);
+}
 
 .program-header {
   position:relative;

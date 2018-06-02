@@ -10,7 +10,7 @@ import { DataService } from '../data.service';
   selector: 'app-speaker',
   template: `
   <div *ngIf="speaker">
-    <h1>{{ speaker.name }}</h1>
+    <h3>{{ speaker.name }}</h3>
     <img [src]="speaker.imgUrl" [alt]="speaker.name" *ngIf="speaker.imgUrl" />
     <div [innerHTML]="speaker.desc"></div>
 

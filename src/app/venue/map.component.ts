@@ -26,7 +26,7 @@ import { PositionService } from './position.service';
           class="point"
           (click)="onPointClicked(venue)"
           [style.top]="venue.position.top+'%'"
-          [style.left]="venue.position.left+'%'">{{venue.number}}</button>
+          [style.left]="venue.position.left+'%'">{{venue.mapNumber}}</button>
       </ng-container>
 
       <div class="detail-popup" #details
@@ -37,7 +37,7 @@ import { PositionService } from './position.service';
         {{chosen.name}}
       </div>
     </div>
-    <button class="locate-me-btn" (click)="watchLocation()" *ngIf="showBtn">Activate map</button>
+    <button class="locate-me-btn" (click)="watchLocation()" *ngIf="showBtn">Aktiver kort</button>
   </div>
   `
 })
@@ -48,7 +48,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   chosen: IVenue;
 
-  showBtn = true;
+  showBtn = false;
 
   watchId: number;
 
@@ -69,13 +69,20 @@ export class MapComponent implements OnInit, OnDestroy {
     if ('permissions' in navigator) {
       navigator['permissions'].query({ 'name': 'geolocation' }).then(status => {
         if (status.state === 'granted') {
-          this.showBtn = false;
           this.watchLocation();
+          return;
+        } else if (status.state === 'denied') {
+          return;
         }
-        if (status.state === 'denied') {
-          this.showBtn = false;
-        }
+        // if we reach this point, permission hasn't been asked yet - so show the ask-permission btn
+        this.showBtn = true;
+        return;
       });
+    } else {
+      // the permissions API is not supported, so keep local state on it.
+      if (localStorage.getItem('location-permission-asked') !== 'yes') {
+        this.showBtn = true;
+      }
     }
 
     this.activatedRoute.queryParams.pipe(
@@ -84,16 +91,15 @@ export class MapComponent implements OnInit, OnDestroy {
       map(([queryParams, venueList]) => venueList.find(venue => venue.id === +queryParams.venue))
     )
       .subscribe(point => {
-        console.log('startingpoint', point);
         if (point) {
           this.onPointClicked(point);
         }
       });
-
   }
 
   watchLocation() {
     this.watchId = navigator.geolocation.watchPosition(this.locationUpdate);
+    localStorage.setItem('location-permission-asked', 'yes');
   }
 
   locationUpdate({ timestamp, coords: { accuracy, latitude, longitude } }) {
