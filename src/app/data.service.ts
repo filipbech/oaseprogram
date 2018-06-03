@@ -13,6 +13,7 @@ const CACHE_KEY = 'data';
 const ONE_DAY = 86400000; // 24 hours in ms
 
 const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
+// const APIURL = '/assets/api/data.json';
 
 export const dayNames = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
 

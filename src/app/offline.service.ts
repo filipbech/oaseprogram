@@ -6,6 +6,7 @@ export class OfflineService {
 
   startDownload(list: string[] = []) {
     if ('serviceWorker' in navigator && list.length) {
+      alert('start downloading ressources');
       this.instructServiceWorker({ type: 'download', list })
         .then(success => {
           this.stored = true;
@@ -13,8 +14,10 @@ export class OfflineService {
           alert('Alle resourcer er nu cachet, og du kan nu fortsætte brugen uden forbindelse.');
         })
         .catch(err => {
+          alert('download failed?');
+          console.log(err);
           // silent catch
-        })
+        });
     }
   }
 

@@ -74,6 +74,10 @@ self.addEventListener('message', event => {
 //gracefull downloading (always resolves the promise - just logs errors)
 const downloadFiles = list => caches
   .open(STATIC_CACHE_NAME)
+  .then(cache => {
+    console.log('from sw: download started')
+    return cache;
+  })
   .then(cache => Promise.all(list.map(url => cache.add(url)
     .catch(err => {
       console.log(url+' failed', err);
