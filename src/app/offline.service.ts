@@ -5,25 +5,25 @@ export class OfflineService {
   stored: boolean;
 
   startDownload(list: string[] = []) {
-    if ('serviceWorker' in navigator && list.length) {
-      alert('start downloading ressources');
+    if ('serviceWorker' in navigator && list.length && !this.stored && navigator.serviceWorker.controller) {
+      alert('OaseProgram henter nu hele programmet for dig, så du fremover ikke behøver internetforbindelse.');
       this.instructServiceWorker({ type: 'download', list })
         .then(success => {
           this.stored = true;
           set('stored', this.stored);
-          alert('Alle resourcer er nu cachet, og du kan nu fortsætte brugen uden forbindelse.');
+          alert('Hele programmet er nu på din enhed! - Skulle det ændre sig undervejs, får du automatisk disse opdateringer med!');
         })
         .catch(err => {
-          alert('download failed?');
+          alert('Der skete en fejl ved download af programmet. Vi prøver automatisk igen lidt senere!');
           console.log(err);
-          // silent catch
+          // semi-silent catch :-D
         });
     }
   }
 
   constructor() {
-    get<boolean>('stored').then(stored => {
-      this.stored = stored;
+    get<boolean|undefined>('stored').then(stored => {
+      this.stored = !!stored;
     });
   }
 
@@ -40,7 +40,7 @@ export class OfflineService {
       };
       setTimeout(_ => {
         (navigator as any).serviceWorker.controller.postMessage(message, [messageChannel.port2]);
-      }, 500);
+      }, 1500);
     });
   }
 
