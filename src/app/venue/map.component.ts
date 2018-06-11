@@ -107,7 +107,9 @@ export class MapComponent implements OnInit, OnDestroy {
 
     if (this.showBtn) {
       const pixelsFromLeft = (this.mapSize.width * this.me.left / 100) - (this.container.nativeElement.getBoundingClientRect().width / 2);
-      this.container.nativeElement.scrollTo(pixelsFromLeft, 0);
+      if (this.container.nativeElement.scrollTo) {
+        this.container.nativeElement.scrollTo(pixelsFromLeft, 0);
+      }
       this.showBtn = false;
     }
   }
