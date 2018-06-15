@@ -1,7 +1,7 @@
 export class PositionService {
   mapBounds = {
-    latitude: [55.862363, 55.857470],
-    longitude: [9.785006, 9.803684]
+    latitude: [55.862250, 55.857278],
+    longitude: [9.785056, 9.802583]
   };
 
 
