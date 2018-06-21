@@ -160,8 +160,10 @@ export class DataService {
             });
           });
 
+        const trackSorting = ['Alders- og interessespor', 'Koncerter', 'Seminarspor', 'Aktivitet'];
+
         const tracks = data.tracks
-          .sort((a, b) => a.type > b.type ? 1 : -1)
+          .sort((a, b) => a.name > b.name ? 1 : -1)
           .reduce((acc, track) => {
             let currentTrackCategory = acc.find(trackCategory => trackCategory.type === track.type);
             if (!currentTrackCategory) {
@@ -170,7 +172,10 @@ export class DataService {
             }
             currentTrackCategory.tracks.push(track);
             return acc;
-          }, []);
+          }, [])
+          .sort((a, b) => {
+            return trackSorting.indexOf(a.type) - trackSorting.indexOf(b.type);
+          });
 
         // Find all the images - in events
         events.forEach(event => {
