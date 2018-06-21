@@ -16,8 +16,6 @@ import { user } from '../icons/user';
     <div *ngIf="event">
       <h3>{{ event.name }}</h3>
 
-      <img [src]="event.imgUrl" *ngIf="event.imgUrl" />
-
       <div class="track" *ngIf="event.trackName">
         ${category}
         <ng-container *ngFor="let track of event.trackDetails; let isLast=last">
@@ -37,6 +35,8 @@ import { user } from '../icons/user';
         ${user}
         <a *ngFor="let speaker of event.speakersDetails" [routerLink]="['/program', 'speaker', speaker.id]" >{{speaker.name}}</a>
       </div>
+
+      <img [src]="event.imgUrl" *ngIf="event.imgUrl" />
 
       <div class="detail-description" [innerHTML]="event.desc" *ngIf="event.desc"></div>
     </div>

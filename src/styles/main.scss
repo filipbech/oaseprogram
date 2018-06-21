@@ -231,10 +231,15 @@ app-live-stream {
 
 app-program-detail, app-speaker {
   img {
-    width: 50%;
-    float:left;
-    margin:0 10px 10px 0;
+    width: 100%;
   }
+  a {
+    font-weight:bold;
+    text-decoration: none;
+  }
+}
+app-program-detail img {
+  margin-top:8px;
 }
 
 .detail-description {
