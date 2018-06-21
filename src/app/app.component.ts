@@ -29,7 +29,7 @@ import { DataService } from './data.service';
         <a routerLinkActive="active" [routerLink]="['program']">${program} <span>Program</span></a>
         <a routerLinkActive="active" [routerLink]="['map']">${map} <span>Kort</span></a>
         <a routerLinkActive="active" [routerLink]="['livestream']">${livestream} <span>Livestream</span></a>
-        <a routerLinkActive="active" [routerLink]="['info']">${info} <span>Hvad er?</span></a>
+        <a routerLinkActive="active" [routerLink]="['info']">${info} <span>Info</span></a>
       </nav>
     </footer>
   `
