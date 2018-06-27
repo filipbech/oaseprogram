@@ -49,7 +49,9 @@ export class AppComponent {
 
     // check to see if launched from homescreen!
     setTimeout(_ => {
-      if (!this.offlineService.stored && (location.search === '?homescreen' || window.matchMedia('(min-width:800px)').matches)) {
+      if (!this.offlineService.stored &&
+          (location.search === '?homescreen' || window.matchMedia('(min-width:800px)').matches) &&
+          Array.from) {
         this.offlineService.startDownload(Array.from(this.dataService.allImages));
     }
     }, 1000);

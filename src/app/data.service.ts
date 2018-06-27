@@ -200,7 +200,9 @@ export class DataService {
         };
 
         this.dataSubject.next(processed as IProcessedApiResult);
-        set(CACHE_KEY, processed);
+        try {
+          set(CACHE_KEY, processed);
+        } catch(e) {}
       });
 
     // Schedule data-update in 15 minutes
@@ -212,11 +214,13 @@ export class DataService {
     private positionService: PositionService
   ) {
     // Use local (idb) version if one exists
-    get(CACHE_KEY).then((data: IProcessedApiResult) => {
-      if (data) {
-        this.dataSubject.next(data);
-      }
-    });
+    try {
+      get(CACHE_KEY).then((data: IProcessedApiResult) => {
+        if (data) {
+          this.dataSubject.next(data);
+        }
+      });
+    } catch(e) {}
 
     // Look for program on the server
     this.updateData();

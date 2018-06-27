@@ -1,5 +1,4 @@
 import { get, set } from 'idb-keyval';
-import { NgZone } from '@angular/core';
 
 export class OfflineService {
   stored: boolean;
@@ -22,9 +21,11 @@ export class OfflineService {
   }
 
   constructor() {
-    get<boolean|undefined>('stored').then(stored => {
-      this.stored = !!stored;
-    });
+    try {
+      get<boolean|undefined>('stored').then(stored => {
+        this.stored = !!stored;
+      });
+    } catch(e) {}
   }
 
   private instructServiceWorker(message) {
