@@ -17,8 +17,8 @@ import { DataService } from './data.service';
   template: `
     <header>
       <div class="center">
-        <button (click)="goBack()" class="backBtn">${arrow}</button>
-        <a routerLink="/">${conf.title}</a>
+        <button (click)="goBack()" class="backBtn" aria-label="Tilbage">${arrow}</button>
+        <a routerLink="/" aria-label="Forsiden">${conf.title}</a>
       </div>
     </header>
     <div class="content">

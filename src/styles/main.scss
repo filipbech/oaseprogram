@@ -1,7 +1,7 @@
 $purple1: #8c2b76;
 $purple2: #982f80;
 $lightpurple: #f3e9f1;
-$grey: #8b8b8b;
+$grey: #4e4e4e;
 $max-width:500px;
 $navHeight: 50px;
 
@@ -22,6 +22,7 @@ body, html {
   font-family: $textFont;
   height:100%;
   background:linear-gradient($purple1 0px, $purple2 36px, #FFF 36px, #FFF calc(100% - #{$navHeight}), $lightpurple calc(100% - #{$navHeight}), $lightpurple);
+  font-display: optional;
 }
 p, img {
   margin: 0 0 8px 0;

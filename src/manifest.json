@@ -1,11 +1,16 @@
 {
   "name": "Oaseprogram",
-  "short_name": "Oase",
+  "short_name": "SO18",
   "icons": [
     {
       "src": "/assets/icons/app-icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "/assets/icons/app-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
   "start_url": "/?homescreen",

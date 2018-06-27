@@ -12,9 +12,11 @@ import { arrow } from '../icons/arrow';
   <h3>{{ dayNames[displayDate.getDay()] }}</h3>
   <a *ngIf="(nextPreviousLinkInfo | async)?.prev"
     [routerLink]="['/program', (nextPreviousLinkInfo | async)?.prev]"
+    aria-label="Forrige dag"
     class="previous-day">${arrow}</a>
   <a *ngIf="(nextPreviousLinkInfo | async)?.next"
     [routerLink]="['/program', (nextPreviousLinkInfo | async)?.next]"
+    aria-label="Næste dag"
     class="next-day">${arrow}</a>
   </div>
 
