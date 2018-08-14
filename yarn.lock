@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@abraham/reflection@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@abraham/reflection/-/reflection-0.4.2.tgz#c2b292325986cdcb07ae95cca1a4215650974872"
+
 "@angular-devkit/architect@0.6.0":
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.6.0.tgz#622a933337c946ef85d646545cc4244272ccb402"
