@@ -1,11 +1,10 @@
 # Prio
 
-* mit program /favoritter
-* multi-select på filteret
-* persist filter-settings til url
 * extra menu-punkt "spor" med detalje-side
+* gzip på data
+* 2019-data
 
-# Andre idéer
+## Andre idéer
 
 * hvad kan vi gøre med kortet?
 * dataupdate i worker - eller til serveren
