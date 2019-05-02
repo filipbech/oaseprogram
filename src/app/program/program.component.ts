@@ -12,10 +12,12 @@ import { arrow } from '../icons/arrow';
   <h3>{{ dayNames[displayDate.getDay()] }}</h3>
   <a *ngIf="(nextPreviousLinkInfo | async)?.prev"
     [routerLink]="['/program', (nextPreviousLinkInfo | async)?.prev]"
+    [queryParams]="trackQuery"
     aria-label="Forrige dag"
     class="previous-day">${arrow}</a>
   <a *ngIf="(nextPreviousLinkInfo | async)?.next"
     [routerLink]="['/program', (nextPreviousLinkInfo | async)?.next]"
+    [queryParams]="trackQuery"
     aria-label="Næste dag"
     class="next-day">${arrow}</a>
   </div>
@@ -43,6 +45,8 @@ export class ProgramComponent implements OnDestroy, OnInit {
   @ViewChild('select') select: ElementRef;
 
   hasEvents = true;
+
+  trackQuery = {};
 
   destroy = new Subject();
 
@@ -97,6 +101,8 @@ export class ProgramComponent implements OnDestroy, OnInit {
       value = 0;
       this.select.nativeElement.value = value;
     }
+    history.replaceState('', '', location.pathname + '?track=' + value);
+    this.trackQuery = { track: value };
     this.filterSubject.next(parseFloat(value));
   }
 
