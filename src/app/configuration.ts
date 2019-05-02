@@ -1,3 +1,3 @@
 export const conf = {
-  title: 'SommerOase 2018'
+  title: 'SommerOase 2019'
 };
