@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { clock } from '../icons/clock';
 import { IEvent } from '../data.model';
 import { dayNames } from '../data.service';
@@ -17,14 +17,20 @@ import { dayNames } from '../data.service';
       <div class="title">{{ event.name }}</div>
       <div class="category">{{ event.speakerName }}</div>
       <div class="category">{{ event.trackName }}, {{ event.venueName }} <div class="point">{{event.venueNumber}}</div></div>
+      <app-toggle-favorite [event]="event" (toggleFav)="onToggleFav($event)"></app-toggle-favorite>
     </a>
   `
 })
 export class ProgramLineComponent implements OnChanges {
   @Input() event: IEvent;
   @Input() displayDay: Boolean = false;
+  @Output() toggleFav = new EventEmitter();
 
   dayNames = dayNames;
+
+  onToggleFav(e) {
+    this.toggleFav.emit(e);
+  }
 
   ngOnChanges() {
     if (this.displayDay) {

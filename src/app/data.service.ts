@@ -12,8 +12,8 @@ const CACHE_KEY = 'data';
 
 const ONE_DAY = 86400000; // 24 hours in ms
 
-const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
-// const APIURL = '/assets/api/data.json';
+// const APIURL = 'https://oaseprogramdata.herokuapp.com/data.json';
+const APIURL = '/assets/api/data.json';
 
 export const dayNames = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
 
@@ -35,6 +35,22 @@ export class DataService {
   public speakers$: Observable<ISpeaker[]> = this.dataSubject.pipe(map(result => result.speakers));
   public events$: Observable<IEvent[]> = this.dataSubject.pipe(map(result => result.events));
   public infoCategory$: Observable<IInfoCategory[]> = this.dataSubject.pipe(map(result => result.infoCategories));
+
+  public toggleFavorite(event: IEvent) {
+    const data = Object.assign({}, this.dataSubject.getValue());
+
+    const events = data.events.map(eventItem => {
+      if (eventItem.id === event.id) {
+        eventItem = Object.assign({}, eventItem, {
+          isFavorite: !eventItem.isFavorite
+        });
+      }
+      return eventItem;
+    });
+
+    data.events = events;
+    this.dataSubject.next(data);
+  }
 
   public getVenue(id: number) {
     return this.venues$.pipe(map(venues => venues.find(venue => venue.id === id)));
@@ -110,6 +126,8 @@ export class DataService {
             });
           });
 
+        const lastEvents = this.dataSubject.getValue().events;
+
         const events = data.events
           .sort((eventA, eventB) => eventA.date.start - eventB.date.start)
           .map(event => {
@@ -126,6 +144,8 @@ export class DataService {
             const speakerName = speakersDetails
               .map(speaker => speaker.name)
               .join(', ');
+
+            const isFavorite = !!lastEvents.find(eventItem => eventItem.id === event.id && eventItem.isFavorite);
 
             const venueName = venues
               .find(venue => venue.id === event.venue).name;
@@ -156,7 +176,8 @@ export class DataService {
               venueNumber,
               trackColor,
               speakersDetails,
-              trackDetails
+              trackDetails,
+              isFavorite
             });
           });
 
@@ -200,9 +221,6 @@ export class DataService {
         };
 
         this.dataSubject.next(processed as IProcessedApiResult);
-        try {
-          set(CACHE_KEY, processed);
-        } catch(e) {}
       });
 
     // Schedule data-update in 15 minutes
@@ -221,6 +239,12 @@ export class DataService {
         }
       });
     } catch(e) {}
+
+    this.dataSubject.subscribe(data => {
+      try {
+        set(CACHE_KEY, data);
+      } catch (e) { }
+    });
 
     // Look for program on the server
     this.updateData();

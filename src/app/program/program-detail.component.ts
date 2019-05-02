@@ -9,13 +9,12 @@ import { locationPin } from '../icons/location';
 import { category } from '../icons/category';
 import { user } from '../icons/user';
 
-
 @Component({
   selector: 'app-program-detail',
   template: `
     <div *ngIf="event">
       <h3>{{ event.name }}</h3>
-
+      <app-toggle-favorite [event]="event" (toggleFav)="onToggleFav($event)"></app-toggle-favorite>
       <div class="track" *ngIf="event.trackName">
         ${category}
         <ng-container *ngFor="let track of event.trackDetails; let isLast=last">
@@ -48,6 +47,10 @@ export class ProgramDetailComponent implements OnInit, OnDestroy {
   dayNames = dayNames;
 
   destroy = new Subject();
+
+  onToggleFav(e) {
+    this.dataService.toggleFavorite(e);
+  }
 
   ngOnInit() {
     this.activatedRoute.params.pipe(

@@ -2,7 +2,7 @@ import { Component, OnDestroy, ViewChild, ElementRef, OnInit } from '@angular/co
 import { DataService, IEvent, ITrack, dayNames, ITrackCategory } from '../data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable,  Subject,  BehaviorSubject } from 'rxjs';
-import { takeUntil,  switchMap,  tap, combineLatest, map, take, filter, share } from 'rxjs/operators';
+import { takeUntil,  switchMap,  tap, combineLatest, map, take, filter, share, distinctUntilChanged } from 'rxjs/operators';
 import { arrow } from '../icons/arrow';
 
 @Component({
@@ -24,6 +24,7 @@ import { arrow } from '../icons/arrow';
 
   <label>Viser:
     <select (change)="onChange($event.target.value)" #select>
+      <option value="1">Mine favoritter</option>
       <option value="0">Alle spor</option>
       <optgroup *ngFor="let trackCategory of tracks | async" [label]="trackCategory.type">
         <option *ngFor="let track of trackCategory.tracks" [value]="track.id">{{ track.name }}</option>
@@ -32,7 +33,7 @@ import { arrow } from '../icons/arrow';
   </label>
 
   <div class="app-program-block">
-    <app-program-line *ngFor="let event of events | async" [event]="event"></app-program-line>
+    <app-program-line *ngFor="let event of events | async" [event]="event" (toggleFav)="onToggleFav($event)"></app-program-line>
     <div *ngIf="!hasEvents" class="no-events">
       Ingen programpunkter matcher dine valg.<br/>
       <button (click)="onChange('reset')">Vis alle</button>
@@ -70,9 +71,15 @@ export class ProgramComponent implements OnDestroy, OnInit {
         this.displayDate = new Date(params['date']);
       }),
       switchMap(params => this.dataService.getEventsByDate(params['date'])),
-      combineLatest(this.filterSubject),
+      distinctUntilChanged(),
+      combineLatest(this.filterSubject.pipe(distinctUntilChanged())),
       map(([events, selectedTrack]) => {
-        return events.filter((event: IEvent) => selectedTrack ? event.tracks.indexOf(selectedTrack) > -1 : true);
+        return events.filter((event: IEvent) => {
+          if (selectedTrack === 1) {
+            return event.isFavorite;
+          }
+          return selectedTrack ? event.tracks.indexOf(selectedTrack) > -1 : true;
+        });
       }),
       tap(events => {
         this.hasEvents = !!events.length;
@@ -83,7 +90,8 @@ export class ProgramComponent implements OnDestroy, OnInit {
     this.activatedRoute.queryParams.pipe(
       map(queryparams => queryparams.track),
       takeUntil(this.destroy),
-      combineLatest(this.tracks)
+      combineLatest(this.tracks),
+      take(1)
     )
     .subscribe(([initialTrack, _unused]) => {
       setTimeout(_ => {
@@ -93,6 +101,14 @@ export class ProgramComponent implements OnDestroy, OnInit {
         }
       }, 0);
     });
+
+    this.filterSubject.pipe(takeUntil(this.destroy)).subscribe(value => {
+      history.replaceState('', '', location.pathname + '?track=' + value);
+    });
+  }
+
+  onToggleFav(event) {
+    this.dataService.toggleFavorite(event);
   }
 
   onChange(value) {
@@ -101,7 +117,6 @@ export class ProgramComponent implements OnDestroy, OnInit {
       value = 0;
       this.select.nativeElement.value = value;
     }
-    history.replaceState('', '', location.pathname + '?track=' + value);
     this.trackQuery = { track: value };
     this.filterSubject.next(parseFloat(value));
   }

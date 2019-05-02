@@ -243,6 +243,26 @@ app-program-detail img {
   margin-top:8px;
 }
 
+app-toggle-favorite {
+  position:absolute;
+  top:10px;
+  right:15px;
+  display:block;
+  svg {
+    width:20px;
+    height:20px;
+    display:inline-block;
+    vertical-align: middle;
+    margin-right:3px;
+    .fill {
+      opacity:0;
+    }
+  }
+  .active .fill {
+    opacity:1
+  }
+}
+
 .detail-description {
   margin-top:10px;
 }
@@ -345,6 +365,7 @@ app-program-detail, app-program, app-speaker, app-map, app-live-stream, app-info
   max-width:$max-width;
   display:block;
   padding: 8px;
+  position:relative;
   min-height:100%;
   box-shadow:0 0 3px rgba(0,0,0,0.3);
 }

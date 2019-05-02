@@ -61,6 +61,7 @@ export interface IEvent extends IEventAPIResponse {
   speakersDetails: ISpeaker[];
   venueName: string;
   venueNumber: number;
+  isFavorite: boolean;
 }
 
 export interface IDateRange {
