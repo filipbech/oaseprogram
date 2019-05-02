@@ -67,7 +67,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if ('permissions' in navigator) {
-      navigator['permissions'].query({ 'name': 'geolocation' }).then(status => {
+      (navigator['permissions'] as any).query({ 'name': 'geolocation' }).then(status => {
         if (status.state === 'granted') {
           this.watchLocation();
           return;
