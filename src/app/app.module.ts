@@ -2,6 +2,7 @@ import * as Raven from 'raven-js';
 import { environment } from '../environments/environment';
 
 import { BrowserModule } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -49,7 +50,7 @@ const prodProviders = environment.production
   imports: [
     BrowserModule,
     AppRoutingModule,
-
+    NoopAnimationsModule,
     ProgramModule,
     SpeakerModule,
     VenueModule,

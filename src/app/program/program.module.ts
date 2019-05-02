@@ -5,6 +5,7 @@ import { ProgramLineComponent } from './program-line.component';
 import { ProgramDetailComponent } from './program-detail.component';
 import { ProgramRedirectComponent } from './program-redirect.component';
 import { ToggleFavoriteComponent } from './toggle-favorite.component';
+import { MatSelectModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ToggleFavoriteComponent } from './toggle-favorite.component';
     ToggleFavoriteComponent
   ],
   imports: [
-    CoreModule
+    CoreModule,
+    MatSelectModule
   ],
   exports: [
     ProgramComponent,

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable,  Subject,  BehaviorSubject } from 'rxjs';
 import { takeUntil,  switchMap,  tap, combineLatest, map, take, filter, share, distinctUntilChanged } from 'rxjs/operators';
 import { arrow } from '../icons/arrow';
+import { MatSelect } from '@angular/material';
 
 @Component({
   selector: 'app-program',
@@ -23,13 +24,14 @@ import { arrow } from '../icons/arrow';
   </div>
 
   <label>Viser:
-    <select (change)="onChange($event.target.value)" #select>
-      <option value="1">Mine favoritter</option>
-      <option value="0">Alle spor</option>
-      <optgroup *ngFor="let trackCategory of tracks | async" [label]="trackCategory.type">
-        <option *ngFor="let track of trackCategory.tracks" [value]="track.id">{{ track.name }}</option>
-      <optgroup>
-    </select>
+  <mat-form-field>
+    <mat-select #select (change)="onChange($event)" multiple [value]="initialFilter">
+      <mat-option [value]="1">Mine favoritter</mat-option>
+      <mat-optgroup *ngFor="let trackCategory of tracks | async" [label]="trackCategory.type">
+        <mat-option *ngFor="let track of trackCategory.tracks" [value]="track.id">{{ track.name }}</mat-option>
+      </mat-optgroup>
+    </mat-select>
+  </mat-form-field>
   </label>
 
   <div class="app-program-block">
@@ -43,9 +45,11 @@ import { arrow } from '../icons/arrow';
 })
 export class ProgramComponent implements OnDestroy, OnInit {
 
-  @ViewChild('select') select: ElementRef;
+  @ViewChild('select') select: MatSelect;
 
   hasEvents = true;
+
+  initialFilter;
 
   trackQuery = {};
 
@@ -62,7 +66,7 @@ export class ProgramComponent implements OnDestroy, OnInit {
       switchMap(params => this.dataService.nextPreviousDayLinkInfo(params['date']))
     );
 
-  filterSubject = new BehaviorSubject(0);
+  filterSubject = new BehaviorSubject([]);
 
   events: Observable<IEvent[]> = this.activatedRoute.params
     .pipe(
@@ -75,10 +79,17 @@ export class ProgramComponent implements OnDestroy, OnInit {
       combineLatest(this.filterSubject.pipe(distinctUntilChanged())),
       map(([events, selectedTrack]) => {
         return events.filter((event: IEvent) => {
-          if (selectedTrack === 1) {
+          if (selectedTrack.length < 1) {
+            return true;
+          }
+          if (selectedTrack[0] === 1) {
             return event.isFavorite;
           }
-          return selectedTrack ? event.tracks.indexOf(selectedTrack) > -1 : true;
+          for (let i = 0; i < selectedTrack.length; i++) {
+            if (event.tracks.indexOf(selectedTrack[i]) > -1) {
+              return true;
+            }
+          }
         });
       }),
       tap(events => {
@@ -96,8 +107,8 @@ export class ProgramComponent implements OnDestroy, OnInit {
     .subscribe(([initialTrack, _unused]) => {
       setTimeout(_ => {
         if (initialTrack) {
-          this.onChange(initialTrack);
-          this.select.nativeElement.value = initialTrack;
+          this.initialFilter = initialTrack.split(',').map(str=>parseFloat(str));
+          this.onChange(this.initialFilter);
         }
       }, 0);
     });
@@ -105,6 +116,11 @@ export class ProgramComponent implements OnDestroy, OnInit {
     this.filterSubject.pipe(takeUntil(this.destroy)).subscribe(value => {
       history.replaceState('', '', location.pathname + '?track=' + value);
     });
+
+    this.select.selectionChange.pipe(takeUntil(this.destroy)).subscribe(selectChange => {
+      this.onChange(selectChange.value);
+    });
+
   }
 
   onToggleFav(event) {
@@ -114,11 +130,11 @@ export class ProgramComponent implements OnDestroy, OnInit {
   onChange(value) {
     if (value === 'reset') {
       // set by remove-filter Button
-      value = 0;
-      this.select.nativeElement.value = value;
+      value = [];
+      //this.select.nativeElement.value = value;
     }
     this.trackQuery = { track: value };
-    this.filterSubject.next(parseFloat(value));
+    this.filterSubject.next(value);
   }
 
   ngOnDestroy() {
