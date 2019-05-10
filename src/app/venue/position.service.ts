@@ -1,9 +1,8 @@
 export class PositionService {
   mapBounds = {
-    latitude: [55.862230, 55.857134],
-    longitude: [9.785015, 9.802005]
+    latitude: [55.862230, 55.857048],
+    longitude: [9.785015, 9.803598]
   };
-
 
   calculatePctFromLatLng(lat, lng) {
     const top = 100 * ((lat - this.mapBounds.latitude[0]) / (this.mapBounds.latitude[1] - this.mapBounds.latitude[0]));

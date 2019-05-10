@@ -53,7 +53,7 @@ export class MapComponent implements OnInit, OnDestroy {
   watchId: number;
 
   mapSize = {
-    width: 1158,
+    width: 1242,
     height: 619
   };
 
