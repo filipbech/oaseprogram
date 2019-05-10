@@ -391,7 +391,7 @@ app-accordion {
   }
 }
 
-app-program-detail, app-program, app-speaker, app-map, app-live-stream, app-info {
+app-program-detail, app-program, app-speaker, app-map, app-live-stream, app-info, app-track-list, app-track-detail {
   margin:0 auto;
   max-width:$max-width;
   display:block;
@@ -408,6 +408,19 @@ app-map {
   text-align: center;
 }
 
+app-track-list {
+  .links {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    a {
+      width:30%;
+      overflow:hidden;
+      border:1px solid #000;
+      margin-bottom:3%;
+    }
+  }
+}
 
 
 .mat-form-field-infix {
