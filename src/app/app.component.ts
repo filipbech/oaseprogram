@@ -28,6 +28,7 @@ import { DataService } from './data.service';
       <nav class="center">
         <a routerLinkActive="active" [routerLink]="['program']">${program} <span>Program</span></a>
         <a routerLinkActive="active" [routerLink]="['map']">${map} <span>Kort</span></a>
+        <a routerLinkActive="active" [routerLink]="['spor']">${map} <span>Spor</span></a>
         <a routerLinkActive="active" [routerLink]="['livestream']">${livestream} <span>Livestream</span></a>
         <a routerLinkActive="active" [routerLink]="['info']">${info} <span>Info</span></a>
       </nav>

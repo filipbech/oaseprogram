@@ -60,6 +60,19 @@ export class DataService {
     return this.speakers$.pipe(map(speakers => speakers.find(speaker => speaker.id === id)));
   }
 
+  public getTrack(id: number) {
+    return this.tracks$.pipe(map(trackCategories => {
+      for (let i = 0; i < trackCategories.length; i++) {
+        for (let y = 0; y < trackCategories[i].tracks.length; y++) {
+          if (trackCategories[i].tracks[y].id === id) {
+            return trackCategories[i].tracks[y];
+          }
+        }
+      }
+      return null;
+    }));
+  }
+
   public getEventsByDate(datestr: string) {
     const start = new Date(datestr).getTime();
     const end = start + ONE_DAY;

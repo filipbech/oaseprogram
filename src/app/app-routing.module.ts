@@ -9,6 +9,8 @@ import { ProgramDetailComponent } from './program/program-detail.component';
 import { ProgramRedirectComponent } from './program/program-redirect.component';
 import { InfoPageComponent } from './info/info-page.component';
 import { LiveStreamComponent } from './livestream/live-stream.component';
+import { TrackListComponent } from './tracks/track-list.component';
+import { TrackDetailComponent } from './tracks/track-detail.component';
 
 export const appRoutes: Routes = [
   {
@@ -43,6 +45,14 @@ export const appRoutes: Routes = [
   {
     path: 'info',
     component: InfoPageComponent,
+  },
+  {
+    path: 'spor',
+    component: TrackListComponent
+  },
+  {
+    path: 'spor/:id',
+    component: TrackDetailComponent
   },
   {
     path: '**',

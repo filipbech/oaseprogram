@@ -18,6 +18,7 @@ import { DataService } from './data.service';
 import { OfflineService } from './offline.service';
 import { PositionService } from './venue/position.service';
 import { TrackingService } from './tracking.service';
+import { TrackModule } from './tracks/track.module';
 
 if (environment.production) {
   Raven
@@ -55,7 +56,8 @@ const prodProviders = environment.production
     SpeakerModule,
     VenueModule,
     InfoModule,
-    LiveStreamModule
+    LiveStreamModule,
+    TrackModule
   ],
   providers: [
     ...prodProviders,
