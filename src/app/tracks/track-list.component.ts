@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
           *ngFor="let track of category.tracks"
           [routerLink]="['/spor', track.id]"
         >
-          <img [src]="track.imgUrl" alt="" />
+          <img [src]="track.imgUrl" alt="" loading="lazy" />
           {{track.name}}
         </a>
       </div>

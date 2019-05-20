@@ -5,6 +5,7 @@ import { info } from './icons/info';
 import { livestream } from './icons/livestream';
 import { program } from './icons/program';
 import { arrow } from './icons/arrow';
+import { track } from './icons/track';
 import { map } from './icons/map';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -28,7 +29,7 @@ import { DataService } from './data.service';
       <nav class="center">
         <a routerLinkActive="active" [routerLink]="['program']">${program} <span>Program</span></a>
         <a routerLinkActive="active" [routerLink]="['map']">${map} <span>Kort</span></a>
-        <a routerLinkActive="active" [routerLink]="['spor']">${map} <span>Spor</span></a>
+        <a routerLinkActive="active" [routerLink]="['spor']">${track} <span>Spor</span></a>
         <a routerLinkActive="active" [routerLink]="['livestream']">${livestream} <span>Livestream</span></a>
         <a routerLinkActive="active" [routerLink]="['info']">${info} <span>Info</span></a>
       </nav>
@@ -48,25 +49,18 @@ export class AppComponent {
     private offlineService: OfflineService
   ) {
 
-    // check to see if launched from homescreen!
-    setTimeout(_ => {
-      if (!this.offlineService.stored &&
-          (location.search === '?homescreen' || window.matchMedia('(min-width:800px)').matches) &&
-          Array.from) {
-        this.offlineService.startDownload(Array.from(this.dataService.allImages));
+    if (!this.offlineService.stored &&
+      (location.search === '?homescreen' || window.matchMedia('(min-width:800px)').matches) && Array.from) {
+        setTimeout(_ => {
+          this.offlineService.startDownload(Array.from(this.dataService.allImages));
+        }, 1000);
     }
-    }, 1000);
-
-    // if (location.search === '?homescreen') {
-    //   // restore last current url from state on iOS (if not too old)
-    // }
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
     )
     .subscribe((event: NavigationEnd) => {
       this.trackingService.trackPageView(event.url);
-      // later: keep state of current url
     });
   }
 }
