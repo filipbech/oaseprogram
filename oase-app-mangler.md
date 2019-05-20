@@ -1,10 +1,8 @@
 # Prio
 
-* extra menu-punkt "spor" med detalje-side
-* gzip på data - cache-headers (1 min?)
-* 2019-data
-* differential loading (mulitple bundles)
-* angular 8
+* gzip på data (Bo)
+* 2019-data (Bo)
+* track-list design + track-billeder
 * bundle size
   * route-level code-splitting
   * ivy?

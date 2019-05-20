@@ -5,9 +5,9 @@ const STATIC_CACHE_NAME = `${PREFIX}-assets`;
 
 const FILES = [
   '/',
-  '/main.js',
-  '/polyfills.js',
-  '/runtime.js',
+  '/main-es2015.js',
+  '/polyfills-es2015.js',
+  '/runtime-es2015.js',
   //'/styles.js',
   '/styles.css',
   '/assets/map.jpg',
