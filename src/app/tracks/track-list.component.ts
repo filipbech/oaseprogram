@@ -25,15 +25,7 @@ import { Observable } from 'rxjs';
   `
 })
 export class TrackListComponent {
-  tracks: Observable<ITrackCategory[]> = this.dataService.tracks$.pipe(
-    map(trackCategories => trackCategories
-      .filter(cat => {
-        return (
-          cat.type === 'Alders- og interessespor' ||
-          cat.type === 'Seminarspor'
-        );
-      })
-    ));
+  tracks: Observable<ITrackCategory[]> = this.dataService.tracks$;
 
   constructor(private dataService: DataService) {}
 }
