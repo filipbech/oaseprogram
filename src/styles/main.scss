@@ -416,13 +416,31 @@ app-track-list {
     a {
       width:30%;
       overflow:hidden;
-      border:1px solid #000;
       margin-bottom:3%;
+      color:#000;
+      text-decoration: none;
+    }
+    .wrap {
+      width:100%;
+      text-align: center;
+      position:relative;
+      padding-top:100%;
+    }
+    img {
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:auto;
     }
   }
 }
 
-
+app-track-detail {
+  img {
+    max-width:100%;
+  }
+}
 .mat-form-field-infix {
   border: 1px solid black;
   padding: 5px !important;
