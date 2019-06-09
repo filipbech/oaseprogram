@@ -107,7 +107,10 @@ export class ProgramComponent implements OnDestroy, OnInit {
     .subscribe(([initialTrack, _unused]) => {
       setTimeout(_ => {
         if (initialTrack) {
-          this.initialFilter = initialTrack.split(',').map(str=>parseFloat(str));
+          this.initialFilter =
+            (Array.isArray(initialTrack)
+              ? initialTrack
+              : initialTrack.split(',')).map(str => parseFloat(str));
           this.onChange(this.initialFilter);
         }
       }, 0);
