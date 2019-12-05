@@ -70,7 +70,6 @@ export class AppComponent {
       filter(event => event instanceof ActivationEnd),
     )
     .subscribe((event: ActivationEnd) => {
-      console.log('activated', event)
       if (event.snapshot.data['noIndex']) {
         this.meta.addTag({ name:'robots', content: 'noindex'});
       } else {
