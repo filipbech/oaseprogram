@@ -44,7 +44,7 @@ import { PositionService } from './position.service';
 export class MapComponent implements OnInit, OnDestroy {
 
   me: Partial<IPosition> = { inView: false };
-  @ViewChild('container') container: ElementRef;
+  @ViewChild('container', { static: true }) container: ElementRef;
 
   chosen: IVenue;
 

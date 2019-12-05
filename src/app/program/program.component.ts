@@ -45,7 +45,7 @@ import { MatSelect } from '@angular/material';
 })
 export class ProgramComponent implements OnDestroy, OnInit {
 
-  @ViewChild('select') select: MatSelect;
+  @ViewChild('select', { static: true }) select: MatSelect;
 
   hasEvents = true;
 
