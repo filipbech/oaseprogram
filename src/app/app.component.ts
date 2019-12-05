@@ -7,11 +7,12 @@ import { program } from './icons/program';
 import { arrow } from './icons/arrow';
 import { track } from './icons/track';
 import { map } from './icons/map';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { TrackingService } from './tracking.service';
 import { OfflineService } from './offline.service';
 import { DataService } from './data.service';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -46,6 +47,7 @@ export class AppComponent {
     private router: Router,
     private trackingService: TrackingService,
     private dataService: DataService,
+    private meta: Meta,
     private offlineService: OfflineService
   ) {
 
@@ -61,6 +63,20 @@ export class AppComponent {
     )
     .subscribe((event: NavigationEnd) => {
       this.trackingService.trackPageView(event.url);
+
     });
+
+    this.router.events.pipe(
+      filter(event => event instanceof ActivationEnd),
+    )
+    .subscribe((event: ActivationEnd) => {
+      console.log('activated', event)
+      if (event.snapshot.data['noIndex']) {
+        this.meta.addTag({ name:'robots', content: 'noindex'});
+      } else {
+        this.meta.removeTag('name="robots"');
+      }
+    });
+
   }
 }

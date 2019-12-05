@@ -20,42 +20,52 @@ export const appRoutes: Routes = [
   },
   {
     path: 'program',
+    data: { noIndex: false },
     component: ProgramRedirectComponent
   },
   {
     path: 'program/:date',
+    data: { noIndex: false },
     component: ProgramComponent
   },
   {
     path: 'program/event/:eventId',
+    data: { noIndex: false },
     component: ProgramDetailComponent
   },
   {
     path: 'program/speaker/:speakerId',
+    data: { noIndex: false },
     component: SpeakerComponent
   },
   {
     path: 'map',
+    data: { noIndex: true },
     component: MapComponent,
   },
   {
     path: 'livestream',
+    data: { noIndex: true },
     component: LiveStreamComponent,
   },
   {
     path: 'info',
+    data: { noIndex: true },
     component: InfoPageComponent,
   },
   {
     path: 'spor',
+    data: { noIndex: true },
     component: TrackListComponent
   },
   {
     path: 'spor/:id',
+    data: { noIndex: true },
     component: TrackDetailComponent
   },
   {
     path: '**',
+    data: { noIndex: false },
     component: HomeComponent
   }
 ];
