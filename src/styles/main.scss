@@ -254,7 +254,12 @@ app-live-stream {
       height:100%;
     }
   }
+  .stream-image, .stream-image img {
+    width:100%;
+    aspect-ratio: 16/9;
+  }
 }
+
 
 app-program-detail, app-speaker {
   img {
